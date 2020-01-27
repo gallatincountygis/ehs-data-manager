@@ -1,28 +1,31 @@
 // styles
 import './css/main.css';
-
 // Map data
-import { featureLayer, map } from './data/app';
-
+import { wTSLayer, map } from './data/app';
 // MapView
-import MapView from 'esri/views/MapView';
-
+import SceneView from 'esri/views/SceneView';
 // widget utils
 import { initWidgets } from './widgets';
-
 // interactions
 import { interactions } from './interactions';
+import { drawRegulatoryBuffer } from './regulatory-buffer';
 
 /**
  * Initialize application
  */
-const view = new MapView({
+const view = new SceneView({
   container: 'viewDiv',
   map
 });
 
-featureLayer.when(() => {
-  view.goTo(featureLayer.fullExtent);
+wTSLayer.when(() => {
+  view.goTo(wTSLayer.fullExtent);
 });
 
 view.when(initWidgets).then(interactions);
+
+view.on('click', function(event) {
+  view.hitTest(event).then(function(response) {
+    drawRegulatoryBuffer(response, view);
+  });
+});

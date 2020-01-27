@@ -1,33 +1,55 @@
 import FeatureLayer from 'esri/layers/FeatureLayer';
-import TileLayer from 'esri/layers/TileLayer';
-import VectorTileLayer from 'esri/layers/VectorTileLayer';
+import MapImageLayer from 'esri/layers/MapImageLayer';
+import GroupLayer from 'esri/layers/GroupLayer';
+//import TileLayer from 'esri/layers/TileLayer';
+//import VectorTileLayer from 'esri/layers/VectorTileLayer';
 import ArcGISMap from 'esri/Map';
+import ElevationLayer from 'esri/layers/ElevationLayer';
 
-export const featureLayer = new FeatureLayer({
+export const wTSLayer = new FeatureLayer({
   portalItem: {
-    id: 'b234a118ab6b4c91908a1cf677941702'
+    id: '49e1606446f34f93807b1fc437be53c9'
   },
-  outFields: ['NAME', 'STATE_NAME', 'VACANT', 'HSE_UNITS'],
-  title: 'U.S. counties',
+  outFields: ['*'],
+  title: 'Wastewater Treatment Systems',
   opacity: 0.8
 });
 
+const cobMains = new MapImageLayer({
+  url: 'https://gisweb.bozeman.net/arcgis/rest/services/COB_Utilities/Wastewater_Utility/MapServer',
+  title: 'Bozeman Wastewater'
+});
+
+const elevationLayer = new ElevationLayer({
+  url: 'https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer'
+});
+
+const parcelsLayer = new FeatureLayer({
+  url: 'https://gis.gallatin.mt.gov/arcgis/rest/services/MapServices/EHSBase/MapServer/7',
+  title: 'Parcels'
+});
+
+// const intermediateContoursLayer = new FeatureLayer({
+//   url: 'https://carto.nationalmap.gov/arcgis/rest/services/contours/MapServer/26',
+//   title: 'Intermediate Contours'
+// });
+const indexContoursLayer = new FeatureLayer({
+  url: 'https://carto.nationalmap.gov/arcgis/rest/services/contours/MapServer/25',
+  title: 'Index Contours'
+});
+
+// const contoursLayer = new GroupLayer({
+//   title: 'Contours',
+//   visible: true,
+//   visibilityMode: 'inherited',
+//   layers: [intermediateContoursLayer, indexContoursLayer],
+//   opacity: 0.75
+// });
+
 export const map = new ArcGISMap({
-  basemap: {
-    baseLayers: [
-      new TileLayer({
-        portalItem: {
-          // world hillshade
-          id: '1b243539f4514b6ba35e7d995890db1d'
-        }
-      }),
-      new VectorTileLayer({
-        portalItem: {
-          // topographic
-          id: '7dc6cea0b1764a1f9af2e679f642f0f5'
-        }
-      })
-    ]
+  basemap: 'topo',
+  ground: {
+    layers: [elevationLayer]
   },
-  layers: [featureLayer]
+  layers: [indexContoursLayer, parcelsLayer, cobMains, wTSLayer]
 });

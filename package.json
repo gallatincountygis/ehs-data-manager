@@ -5,7 +5,7 @@
   "scripts": {
     "build": "rollup -c --environment BUILD:production",
     "start": "rollup -cw  --environment BUILD:development",
-    "test": "jest"
+    "test": "jest"   
   },
   "postcss": {
     "map": false,

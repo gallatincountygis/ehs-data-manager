@@ -4,11 +4,18 @@ import esri = __esri;
 interface InteractionParameters {
   layerListContainer: HTMLElement;
   legendContainer: HTMLElement;
+  measureContainer: HTMLElement;
   widgetPanel: any;
   view: esri.MapView | esri.SceneView;
 }
 
-export function interactions({ layerListContainer, legendContainer, widgetPanel, view }: InteractionParameters) {
+export function interactions({
+  layerListContainer,
+  legendContainer,
+  measureContainer,
+  widgetPanel,
+  view
+}: InteractionParameters) {
   // toggle widgets
   const actions = Array.from(document.querySelectorAll('calcite-action'));
   for (const action of actions) {
@@ -16,12 +23,20 @@ export function interactions({ layerListContainer, legendContainer, widgetPanel,
       if ((action as any).text === 'Layers') {
         layerListContainer.classList.toggle('hidden');
         legendContainer.classList.add('hidden');
-      } else {
+        measureContainer.classList.add('hidden');
+      } else if ((action as any).text === 'Legend') {
         layerListContainer.classList.add('hidden');
         legendContainer.classList.toggle('hidden');
+        measureContainer.classList.add('hidden');
+      } else if ((action as any).text === 'Measure') {
+        layerListContainer.classList.add('hidden');
+        legendContainer.classList.add('hidden');
+        measureContainer.classList.toggle('hidden');
       }
       widgetPanel.collapsed =
-        layerListContainer.classList.contains('hidden') && legendContainer.classList.contains('hidden');
+        layerListContainer.classList.contains('hidden') &&
+        legendContainer.classList.contains('hidden') &&
+        measureContainer.classList.contains('hidden');
     });
   }
 
