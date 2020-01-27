@@ -3,7 +3,7 @@ node_modules/*
 .vscode/*
 build/*
 dist/*
-output/*
+output/dev/*
 html-report/*
 ~tmp/*
 .baseDir*
