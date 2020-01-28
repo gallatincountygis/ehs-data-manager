@@ -11,7 +11,7 @@ import esri = __esri;
 class Measure extends declared(Measurement) {
   @property()
   @renderable()
-  conductivityNode: { firstElementChild: HTMLSpanElement } | null;
+  gradientNode: { firstElementChild: HTMLSpanElement } | null;
   @property()
   @renderable()
   loadingSpan: HTMLSpanElement;
@@ -30,11 +30,9 @@ class Measure extends declared(Measurement) {
       this.stateWatch = this.watch('viewModel.state', state => {
         switch (state) {
           case 'measured': {
+            this.gradientNode?.remove();
+            this.gradientNode = null;
             this.addHydraulicGradientNodes();
-          }
-          case 'ready': {
-            this.conductivityNode = null;
-            //this.container.remove(this.loadingSpan);
           }
         }
         console.log('Current state: ', state);
@@ -47,20 +45,20 @@ class Measure extends declared(Measurement) {
   }
 
   private addHydraulicGradientNodes() {
-    if (this.container && !this.conductivityNode) {
+    if (this.container) {
       this.renderNow();
       const section = this?.container.querySelectorAll('section')[1];
-      this.conductivityNode = section.lastElementChild.cloneNode(true);
-      if (this?.conductivityNode?.firstElementChild && this?.conductivityNode?.lastElementChild) {
-        this.conductivityNode.firstElementChild.innerText = 'Hydaulic Conductivity';
+      this.gradientNode = section.lastElementChild.cloneNode(true);
+      if (this?.gradientNode?.firstElementChild && this?.gradientNode?.lastElementChild) {
+        this.gradientNode.firstElementChild.innerText = 'Hydaulic Gradient';
         const hydraulicGradient = (
           this.viewModel.activeViewModel.tool.verticalDistance.value /
           this.viewModel.activeViewModel.tool.horizontalDistance.value /
           3
         ).toFixed(4);
-        this.conductivityNode.lastElementChild.innerText = hydraulicGradient;
+        this.gradientNode.lastElementChild.innerText = hydraulicGradient;
       }
-      section.appendChild(this.conductivityNode);
+      section.appendChild(this.gradientNode);
     }
   }
 }
