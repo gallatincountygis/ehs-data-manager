@@ -14,35 +14,45 @@ export function interactions({
   layerListContainer,
   legendContainer,
   measure,
+  basemapGallery,
   widgetPanel,
   view
 }: InteractionParameters) {
   // toggle widgets
   const actions = Array.from(document.querySelectorAll('calcite-action'));
+  const widgetList = [
+    {
+      label: 'Layers',
+      container: layerListContainer
+    },
+    {
+      label: 'Legend',
+      container: legendContainer
+    },
+    {
+      label: 'Measure',
+      container: measure.container
+    },
+    {
+      label: 'Basemap',
+      container: basemapGallery.container
+    }
+  ];
   for (const action of actions) {
     action.addEventListener('click', () => {
-      if ((action as any).text != 'Measure') {
+      const actionText = (action as any).text;
+      widgetList.forEach(w => {
+        actionText == w.label ? w.container.classList.toggle('hidden') : w.container.classList.add('hidden');
+      });
+      if (actionText != 'Measure') {
         measure.disable();
       } else {
         measure.enable();
       }
-      if ((action as any).text === 'Layers') {
-        layerListContainer.classList.toggle('hidden');
-        legendContainer.classList.add('hidden');
-        measure?.container?.classList.add('hidden');
-      } else if ((action as any).text === 'Legend') {
-        layerListContainer.classList.add('hidden');
-        legendContainer.classList.toggle('hidden');
-        measure?.container?.classList.add('hidden');
-      } else if ((action as any).text === 'Measure') {
-        layerListContainer.classList.add('hidden');
-        legendContainer.classList.add('hidden');
-        measure?.container?.classList.toggle('hidden');
-      }
       widgetPanel.collapsed =
-        layerListContainer.classList.contains('hidden') &&
-        legendContainer.classList.contains('hidden') &&
-        measure?.container?.classList.contains('hidden');
+        widgetList.filter(w => {
+          return !w.container.classList.contains('hidden');
+        }).length == 0;
     });
   }
 

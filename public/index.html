@@ -6,6 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="mobile-web-app-capable" content="yes">
   <title>EHS Demo App</title>
+  <link rel="shortcut icon" type="image/png" href="./favicon.ico"/>
+
   <link rel="stylesheet" href="https://js.arcgis.com/4.14/esri/themes/light/main.css">
   <link rel="stylesheet" href="https://unpkg.com/@esri/calcite-app-components@4.11.1/dist/calcite-app/calcite-app.css">
   <link rel="stylesheet" href="index.css">
@@ -33,21 +35,13 @@
             <calcite-action-bar slot="action-bar">
               <calcite-action-group>
                 <calcite-action text="Legend">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="100%" height="100%">
-                      <path d="M4 5.5A1.5 1.5 0 1 1 2.5 4 1.502 1.502 0 0 1 4 5.5zM15 2V1H6v1zm0 4V5H6v1zm0 4V9H6v1zm0 4v-1H6v1zM1 3h3V0H1zm0 8h3V8H1zm2.822 4a.246.246 0 0 0 .216-.364l-1.392-2.55a.177.177 0 0 0-.312.002l-1.376 2.55a.246.246 0 0 0 .217.362z"/>
-                    </svg>
-                </calcite-action>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M5 9a2 2 0 1 1-2-2 2.003 2.003 0 0 1 2 2zM4 9a1 1 0 1 0-1 1 1 1 0 0 0 1-1zm19-5V3H8v1zm0 6V9H8v1zm0 6v-1H8v1zm0 6v-1H8v1zM.937 23L3 19.209 5.063 23zm2.443-1L3 21.301 2.62 22zM1 1h4v4H1zm3 3V2H2v2zm-3 9h4v4H1zm3 3v-2H2v2z"/></svg>                </calcite-action>
                 <calcite-action text="Layers">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="100%" height="100%">
-                    <path
-                      d="M15.71 11.487l-7.4 4.441a.738.738 0 0 1-.635 0L.27 11.487a.272.272 0 0 1 0-.508l.913-.547 6.49 3.895a.738.738 0 0 0 .635 0l6.49-3.895.912.547a.271.271 0 0 1 0 .508zm0-3.74L14.8 7.2l-6.49 3.894a.738.738 0 0 1-.635 0L1.184 7.2l-.913.547a.272.272 0 0 0 0 .507l7.403 4.442a.738.738 0 0 0 .635 0l7.402-4.442a.271.271 0 0 0 0-.507zM.272 5.022l7.403 4.441a.738.738 0 0 0 .635 0l7.402-4.441a.271.271 0 0 0 0-.508L8.309.073a.738.738 0 0 0-.635 0L.27 4.514a.272.272 0 0 0 0 .508z"
-                    />
-                  </svg>
-                </calcite-action>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M21.357 13.922L23.5 15.19 12 22C.2 15.01 1.428 15.74.5 15.188c.527-.309.262-.15 2.145-1.266l.981.58-1.161.688L12 20.838l9.536-5.648-1.161-.687zm-1.23-3.267l1.41.835-9.536 5.648-9.536-5.648 1.41-.835-.98-.58C.736 11.351 1.05 11.165.5 11.487c.927.553-.3-.176 11.5 6.813l11.5-6.81-2.392-1.416zM12 .686C-.111 7.859 1.429 6.948.5 7.493c.926.55-.302-.178 11.5 6.812l11.5-6.81zm-9.536 6.81C3.049 7.148 12 1.848 12 1.848l9.536 5.646L12 13.142z"/></svg>                </calcite-action>
                 <calcite-action text="Measure">
-                  <img src="ruler.svg" width="16" height="16">                  
-
-                </calcite-action>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M20.3 6H15V5h5.29l-1.64-1.65.7-.7 2.86 2.85-2.83 2.85-.71-.7zM4.35 7.65L2.71 6H8V5H2.7l1.63-1.65-.71-.7L.79 5.5l2.86 2.85zM23 13v9H0v-9zm-1 1H1v7h1v-2h1v2h1v-3h1v3h1v-2h1v2h1v-6h1v6h1v-2h1v2h1v-3h1v3h1v-2h1v2h1v-6h1v6h1v-2h1v2h1v-3h1v3h1z"/></svg>                </calcite-action>
+                <calcite-action text="Basemap">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M17 17V2H2v15zm-1-1h-4.874a8.585 8.585 0 0 0 .03-1.017 1.45 1.45 0 0 0 .897-1.63 1.557 1.557 0 0 0 .381-.659 1.376 1.376 0 0 0 .811-.3 3.207 3.207 0 0 0 2.755.42zM3 16V3h8.81a1.483 1.483 0 0 0-.194 1.43 1.461 1.461 0 0 0-.472 1.029 1.47 1.47 0 0 0-.826 1.501 3.333 3.333 0 0 1 .063.37 1.957 1.957 0 0 0-.602.616 1.417 1.417 0 0 0-1.99.87 1.577 1.577 0 0 0-2.517 1.76.033.033 0 0 0 .02-.016c-.609 1.132-.186 1.97.634 2.256a1.509 1.509 0 0 0 .944 2.189 2.551 2.551 0 0 0-.14.995zm5.001-1.447c0-.528-1.006-.378-1.164-.695-.393-.785.668-.987.668-1.612 0-.154-.08-.47-.323-.497-.338-.034-.426.15-.767.15a.39.39 0 0 1-.422-.348c0-.372.297-.545.297-.917 0-.243-.1-.38-.1-.62a.597.597 0 0 1 .57-.62c.312 0 .446.254.595.52.324.579 1.365.294 1.365-.644a.456.456 0 0 1 .422-.473c.334 0 .459.348.793.348.552 0 .532-.73 1.017-.99.596-.322.422-1.019.348-1.39-.033-.165.279-.483.446-.473.694.052.397-.518.397-.792 0-.435.596-.506.596-.943 0-.27-.224-.396-.224-.668 0-.33.4-.628.883-.889H16v8.782c-.29.075-.54.136-.584.136-.503 0-1.117.07-1.48-.249-.256-.22-.249-.669-.596-.669-.466 0-.501.696-.967.696-.21 0-.31-.151-.52-.151a.342.342 0 0 0-.372.305v.483c0 .409-.547.49-.547.9 0 .166.15.23.15.396 0 .559-.994.484-.994 1.042 0 .172.077.336.077.496 0 .103-.015.456-.043.833H7.73c-.003-.58.27-1.096.27-1.447zM20 20H5v-1h14V5h1zm3-12v15H8v-1h14V8z"/></svg>                </calcite-action>
               </calcite-action-group>
             </calcite-action-bar>
             <!-- Widget Container -->
@@ -57,6 +51,7 @@
                         <div id="widget-legend"></div>
                         <div id="widget-layerlist" class="hidden"></div>
                         <div id="widget-measure" class="hidden"></div>
+                        <div id="widget-basemap-gallery" class="hidden"></div>
                     </calcite-block-content>
                 </calcite-block>
             </div>
