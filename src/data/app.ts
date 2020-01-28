@@ -12,7 +12,11 @@ export const wTSLayer = new FeatureLayer({
   },
   outFields: ['*'],
   title: 'Wastewater Treatment Systems',
-  opacity: 0.8
+  opacity: 0.8,
+  elevationInfo: {
+    mode: 'on-the-ground'
+  }
+
 });
 
 const cobMains = new MapImageLayer({
