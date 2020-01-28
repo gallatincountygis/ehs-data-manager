@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="mobile-web-app-capable" content="yes">
-  <title>ArcGIS Template Application</title>
+  <title>EHS Demo App</title>
   <link rel="stylesheet" href="https://js.arcgis.com/4.14/esri/themes/light/main.css">
   <link rel="stylesheet" href="https://unpkg.com/@esri/calcite-app-components@4.11.1/dist/calcite-app/calcite-app.css">
   <link rel="stylesheet" href="index.css">
@@ -44,6 +44,10 @@
                     />
                   </svg>
                 </calcite-action>
+                <calcite-action text="Measure">
+                  <img src="ruler.svg" width="16" height="16">                  
+
+                </calcite-action>
               </calcite-action-group>
             </calcite-action-bar>
             <!-- Widget Container -->
@@ -52,6 +56,7 @@
                     <calcite-block-content>
                         <div id="widget-legend"></div>
                         <div id="widget-layerlist" class="hidden"></div>
+                        <div id="widget-measure" class="hidden"></div>
                     </calcite-block-content>
                 </calcite-block>
             </div>
@@ -60,7 +65,7 @@
 
       <div slot="shell-header">
         <header class="header">
-          <h2 class="heading">ArcGIS Template Application</h2>
+          <h2 class="heading">EHS Demo App</h2>
         </header>
       </div>
       <div id="viewDiv"></div>

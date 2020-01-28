@@ -3,12 +3,12 @@ import MapImageLayer from 'esri/layers/MapImageLayer';
 import GroupLayer from 'esri/layers/GroupLayer';
 //import TileLayer from 'esri/layers/TileLayer';
 //import VectorTileLayer from 'esri/layers/VectorTileLayer';
-import ArcGISMap from 'esri/Map';
+import Map from 'esri/Map';
 import ElevationLayer from 'esri/layers/ElevationLayer';
 
 export const wTSLayer = new FeatureLayer({
   portalItem: {
-    id: '49e1606446f34f93807b1fc437be53c9'
+    id: '17a725a913cc415195ac9263e12e22e7'
   },
   outFields: ['*'],
   title: 'Wastewater Treatment Systems',
@@ -17,7 +17,8 @@ export const wTSLayer = new FeatureLayer({
 
 const cobMains = new MapImageLayer({
   url: 'https://gisweb.bozeman.net/arcgis/rest/services/COB_Utilities/Wastewater_Utility/MapServer',
-  title: 'Bozeman Wastewater'
+  title: 'Bozeman Wastewater',
+  visible: false
 });
 
 const elevationLayer = new ElevationLayer({
@@ -29,27 +30,40 @@ const parcelsLayer = new FeatureLayer({
   title: 'Parcels'
 });
 
-// const intermediateContoursLayer = new FeatureLayer({
-//   url: 'https://carto.nationalmap.gov/arcgis/rest/services/contours/MapServer/26',
-//   title: 'Intermediate Contours'
-// });
-const indexContoursLayer = new FeatureLayer({
-  url: 'https://carto.nationalmap.gov/arcgis/rest/services/contours/MapServer/25',
-  title: 'Index Contours'
+parcelsLayer.when().then((l)=>{
+  console.log(l);
+})
+
+const intermediateContoursLayer = new FeatureLayer({
+  url: 'https://carto.nationalmap.gov/arcgis/rest/services/contours/MapServer/26',
+  title: 'Intermediate Contours',
+  returnZ: false,
+  elevationInfo: {
+    mode: 'on-the-ground'
+  }
 });
 
-// const contoursLayer = new GroupLayer({
-//   title: 'Contours',
-//   visible: true,
-//   visibilityMode: 'inherited',
-//   layers: [intermediateContoursLayer, indexContoursLayer],
-//   opacity: 0.75
-// });
+const indexContoursLayer = new FeatureLayer({
+  url: 'https://carto.nationalmap.gov/arcgis/rest/services/contours/MapServer/25',
+  title: 'Index Contours',
+  returnZ: false,
+  elevationInfo: {
+    mode: 'on-the-ground'
+  }
+});
 
-export const map = new ArcGISMap({
+const contoursLayer = new GroupLayer({
+  title: 'Contours',
+  visible: false,
+  visibilityMode: 'inherited',
+  layers: [intermediateContoursLayer, indexContoursLayer],
+  opacity: 0.75
+});
+
+export const map = new Map({
   basemap: 'topo',
   ground: {
     layers: [elevationLayer]
   },
-  layers: [indexContoursLayer, parcelsLayer, cobMains, wTSLayer]
+  layers: [contoursLayer, parcelsLayer, cobMains, wTSLayer]
 });

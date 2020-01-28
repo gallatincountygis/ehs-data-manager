@@ -1,10 +1,11 @@
 import ResizeObserver from 'resize-observer-polyfill';
+import Measure from './widgets/Measure';
 import esri = __esri;
 
 interface InteractionParameters {
   layerListContainer: HTMLElement;
   legendContainer: HTMLElement;
-  measureContainer: HTMLElement;
+  measure: Measure;
   widgetPanel: any;
   view: esri.MapView | esri.SceneView;
 }
@@ -12,7 +13,7 @@ interface InteractionParameters {
 export function interactions({
   layerListContainer,
   legendContainer,
-  measureContainer,
+  measure,
   widgetPanel,
   view
 }: InteractionParameters) {
@@ -20,23 +21,28 @@ export function interactions({
   const actions = Array.from(document.querySelectorAll('calcite-action'));
   for (const action of actions) {
     action.addEventListener('click', () => {
+      if ((action as any).text != 'Measure') {
+        measure.disable();
+      } else {
+        measure.enable();
+      }
       if ((action as any).text === 'Layers') {
         layerListContainer.classList.toggle('hidden');
         legendContainer.classList.add('hidden');
-        measureContainer.classList.add('hidden');
+        measure?.container?.classList.add('hidden');
       } else if ((action as any).text === 'Legend') {
         layerListContainer.classList.add('hidden');
         legendContainer.classList.toggle('hidden');
-        measureContainer.classList.add('hidden');
+        measure?.container?.classList.add('hidden');
       } else if ((action as any).text === 'Measure') {
         layerListContainer.classList.add('hidden');
         legendContainer.classList.add('hidden');
-        measureContainer.classList.toggle('hidden');
+        measure?.container?.classList.toggle('hidden');
       }
       widgetPanel.collapsed =
         layerListContainer.classList.contains('hidden') &&
         legendContainer.classList.contains('hidden') &&
-        measureContainer.classList.contains('hidden');
+        measure?.container?.classList.contains('hidden');
     });
   }
 
