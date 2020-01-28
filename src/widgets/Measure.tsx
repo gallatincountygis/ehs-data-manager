@@ -30,7 +30,7 @@ class Measure extends declared(Measurement) {
       this.stateWatch = this.watch('viewModel.state', state => {
         switch (state) {
           case 'measured': {
-            this.addHydraulicConductivityNodes();
+            this.addHydraulicGradientNodes();
           }
           case 'ready': {
             this.conductivityNode = null;
@@ -46,19 +46,19 @@ class Measure extends declared(Measurement) {
     console.log(this);
   }
 
-  private addHydraulicConductivityNodes() {
+  private addHydraulicGradientNodes() {
     if (this.container && !this.conductivityNode) {
       this.renderNow();
       const section = this?.container.querySelectorAll('section')[1];
       this.conductivityNode = section.lastElementChild.cloneNode(true);
       if (this?.conductivityNode?.firstElementChild && this?.conductivityNode?.lastElementChild) {
         this.conductivityNode.firstElementChild.innerText = 'Hydaulic Conductivity';
-        const hydraulicConductivity = (
+        const hydraulicGradient = (
           this.viewModel.activeViewModel.tool.verticalDistance.value /
           this.viewModel.activeViewModel.tool.horizontalDistance.value /
           3
         ).toFixed(4);
-        this.conductivityNode.lastElementChild.innerText = hydraulicConductivity;
+        this.conductivityNode.lastElementChild.innerText = hydraulicGradient;
       }
       section.appendChild(this.conductivityNode);
     }

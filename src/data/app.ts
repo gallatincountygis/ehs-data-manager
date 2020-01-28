@@ -16,7 +16,6 @@ export const wTSLayer = new FeatureLayer({
   elevationInfo: {
     mode: 'on-the-ground'
   }
-
 });
 
 const cobMains = new MapImageLayer({
@@ -34,9 +33,9 @@ const parcelsLayer = new FeatureLayer({
   title: 'Parcels'
 });
 
-parcelsLayer.when().then((l)=>{
+parcelsLayer.when().then(l => {
   console.log(l);
-})
+});
 
 const intermediateContoursLayer = new FeatureLayer({
   url: 'https://carto.nationalmap.gov/arcgis/rest/services/contours/MapServer/26',
