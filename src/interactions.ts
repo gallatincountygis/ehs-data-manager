@@ -6,8 +6,13 @@ interface InteractionParameters {
   layerListContainer: HTMLElement;
   legendContainer: HTMLElement;
   measure: Measure;
+  basemapGallery: esri.BasemapGallery;
   widgetPanel: any;
   view: esri.MapView | esri.SceneView;
+}
+interface WidgetListItem {
+  label: string;
+  container: HTMLElement;
 }
 
 export function interactions({
@@ -20,7 +25,7 @@ export function interactions({
 }: InteractionParameters) {
   // toggle widgets
   const actions = Array.from(document.querySelectorAll('calcite-action'));
-  const widgetList = [
+  const widgetList: WidgetListItem[] = [
     {
       label: 'Layers',
       container: layerListContainer
@@ -31,11 +36,11 @@ export function interactions({
     },
     {
       label: 'Measure',
-      container: measure.container
+      container: measure.container as HTMLElement
     },
     {
       label: 'Basemap',
-      container: basemapGallery.container
+      container: basemapGallery.container as HTMLElement
     }
   ];
   for (const action of actions) {

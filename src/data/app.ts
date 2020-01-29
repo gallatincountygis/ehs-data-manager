@@ -5,6 +5,7 @@ import GroupLayer from 'esri/layers/GroupLayer';
 //import VectorTileLayer from 'esri/layers/VectorTileLayer';
 import Map from 'esri/Map';
 import ElevationLayer from 'esri/layers/ElevationLayer';
+import esri = __esri;
 
 export const wTSLayer = new FeatureLayer({
   portalItem: {

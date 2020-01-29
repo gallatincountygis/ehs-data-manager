@@ -11,7 +11,7 @@ import esri = __esri;
 class Measure extends declared(Measurement) {
   @property()
   @renderable()
-  gradientNode: { firstElementChild: HTMLSpanElement } | null;
+  gradientNode: HTMLElement | null;
   @property()
   @renderable()
   loadingSpan: HTMLSpanElement;
@@ -47,16 +47,16 @@ class Measure extends declared(Measurement) {
   private addHydraulicGradientNodes() {
     if (this.container) {
       this.renderNow();
-      const section = this?.container.querySelectorAll('section')[1];
-      this.gradientNode = section.lastElementChild.cloneNode(true);
+      const section = (this?.container as HTMLElement).querySelectorAll('section')[1];
+      this.gradientNode = section?.lastElementChild?.cloneNode(true) as HTMLSpanElement;
       if (this?.gradientNode?.firstElementChild && this?.gradientNode?.lastElementChild) {
-        this.gradientNode.firstElementChild.innerText = 'Hydaulic Gradient';
+        (this.gradientNode.firstElementChild as HTMLSpanElement).innerText = 'Hydaulic Gradient';
         const hydraulicGradient = (
-          this.viewModel.activeViewModel.tool.verticalDistance.value /
+          (this.viewModel.activeViewModel as esri.DirectLineMeasurement3DViewModel).tool.verticalDistance.value /
           this.viewModel.activeViewModel.tool.horizontalDistance.value /
           3
         ).toFixed(4);
-        this.gradientNode.lastElementChild.innerText = hydraulicGradient;
+        (this.gradientNode.lastElementChild as HTMLSpanElement).innerText = hydraulicGradient;
       }
       section.appendChild(this.gradientNode);
     }
