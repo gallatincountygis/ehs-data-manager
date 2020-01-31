@@ -7,8 +7,10 @@ interface InteractionParameters {
   legendContainer: HTMLElement;
   measure: Measure;
   basemapGallery: esri.BasemapGallery;
+  editor: esri.Editor;
   widgetPanel: any;
   view: esri.MapView | esri.SceneView;
+  mapView: esri.MapView;
 }
 interface WidgetListItem {
   label: string;
@@ -20,8 +22,10 @@ export function interactions({
   legendContainer,
   measure,
   basemapGallery,
+  editor,
   widgetPanel,
-  view
+  view,
+  mapView
 }: InteractionParameters) {
   // toggle widgets
   const actions = Array.from(document.querySelectorAll('calcite-action'));
@@ -41,6 +45,10 @@ export function interactions({
     {
       label: 'Basemap',
       container: basemapGallery.container as HTMLElement
+    },
+    {
+      label: 'Editor',
+      container: editor.container as HTMLElement
     }
   ];
   for (const action of actions) {
@@ -63,7 +71,7 @@ export function interactions({
 
   // listen for widget panel to be to be resized
   const rObserver = new ResizeObserver(() => {
-    view.padding = {
+    view.padding = mapView.padding = {
       ...view.padding,
       left: widgetPanel.offsetWidth
     };

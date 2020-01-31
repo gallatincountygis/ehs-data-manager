@@ -4,6 +4,7 @@ import './css/main.css';
 import { wTSLayer, map } from './data/app';
 // MapView
 import SceneView from 'esri/views/SceneView';
+import MapView from 'esri/views/MapView';
 // widget utils
 import { initWidgets } from './widgets';
 // interactions
@@ -13,19 +14,29 @@ import { drawRegulatoryBuffer } from './regulatory-buffer';
 /**
  * Initialize application
  */
-const view = new SceneView({
-  container: 'viewDiv',
+
+const sceneView = new SceneView({
+  container: 'sceneViewDiv',
   map
 });
 
+const mapView = new MapView({
+  container: 'mapViewDiv',
+  map
+});
+export const viewConfig = {
+  sceneView,
+  mapView
+};
+
 wTSLayer.when(() => {
-  view.goTo(wTSLayer.fullExtent);
+  sceneView.goTo(wTSLayer.fullExtent);
 });
 
-view.when(initWidgets).then(interactions);
+sceneView.when(() => initWidgets(sceneView, mapView)).then(interactions);
 
-view.on('click', function(event) {
-  view.hitTest(event).then(function(response) {
-    drawRegulatoryBuffer(response, view);
+sceneView.on('click', function(event) {
+  sceneView.hitTest(event).then(function(response) {
+    drawRegulatoryBuffer(response, sceneView);
   });
 });

@@ -21,7 +21,7 @@ export function drawRegulatoryBuffer(response: esri.HitTestResult, view: esri.Vi
       type: 'simple-fill',
       outline: { width: 2, color: [255, 170, 0, 1] },
       color: [0, 0, 0, 0]
-    }
+    } as esri.SymbolProperties
   });
   graphic = bufferGraphic;
   view.graphics.add(bufferGraphic);

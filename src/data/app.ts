@@ -5,18 +5,19 @@ import GroupLayer from 'esri/layers/GroupLayer';
 //import VectorTileLayer from 'esri/layers/VectorTileLayer';
 import Map from 'esri/Map';
 import ElevationLayer from 'esri/layers/ElevationLayer';
-import esri = __esri;
+//import esri = __esri;
 
 export const wTSLayer = new FeatureLayer({
   portalItem: {
+    //id: '49e1606446f34f93807b1fc437be53c9'
     id: '17a725a913cc415195ac9263e12e22e7'
   },
   outFields: ['*'],
   title: 'Wastewater Treatment Systems',
-  opacity: 0.8,
-  elevationInfo: {
-    mode: 'on-the-ground'
-  }
+  opacity: 0.8
+  // elevationInfo: {
+  //   mode: 'on-the-ground'
+  // }
 });
 
 const cobMains = new MapImageLayer({
@@ -32,10 +33,6 @@ const elevationLayer = new ElevationLayer({
 const parcelsLayer = new FeatureLayer({
   url: 'https://gis.gallatin.mt.gov/arcgis/rest/services/MapServices/EHSBase/MapServer/7',
   title: 'Parcels'
-});
-
-parcelsLayer.when().then(l => {
-  console.log(l);
 });
 
 const intermediateContoursLayer = new FeatureLayer({
@@ -69,5 +66,5 @@ export const map = new Map({
   ground: {
     layers: [elevationLayer]
   },
-  layers: [contoursLayer, parcelsLayer, cobMains, wTSLayer]
+  layers: [parcelsLayer, cobMains, wTSLayer]
 });
