@@ -65,6 +65,7 @@ export function initWidgets(view: esri.SceneView, mapView: esri.MapView) {
     measure,
     basemapGallery,
     editor,
+    viewToggle,
     widgetPanel,
     view,
     mapView

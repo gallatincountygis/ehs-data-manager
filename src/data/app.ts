@@ -9,8 +9,8 @@ import ElevationLayer from 'esri/layers/ElevationLayer';
 
 export const wTSLayer = new FeatureLayer({
   portalItem: {
-    //id: '49e1606446f34f93807b1fc437be53c9'
-    id: '17a725a913cc415195ac9263e12e22e7'
+    id: '49e1606446f34f93807b1fc437be53c9'
+    //id: '17a725a913cc415195ac9263e12e22e7'
   },
   outFields: ['*'],
   title: 'Wastewater Treatment Systems',

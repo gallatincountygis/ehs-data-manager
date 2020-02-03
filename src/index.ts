@@ -7,6 +7,7 @@ import SceneView from 'esri/views/SceneView';
 import MapView from 'esri/views/MapView';
 // widget utils
 import { initWidgets } from './widgets';
+import Editor from 'esri/widgets/Editor';
 // interactions
 import { interactions } from './interactions';
 import { drawRegulatoryBuffer } from './regulatory-buffer';
@@ -32,7 +33,19 @@ export const viewConfig = {
 wTSLayer.when(() => {
   sceneView.goTo(wTSLayer.fullExtent);
 });
-
+// let editor;
+// mapView.when(mapView => {
+//   editor = new Editor({
+//     view: mapView,
+//     layerInfos: [
+//       {
+//         layer: wTSLayer
+//       }
+//     ],
+//     container: document.getElementById('widget-editor') as HTMLElement
+//   });
+//   //mapView.ui.add(editor, 'top-right');
+// });
 sceneView.when(() => initWidgets(sceneView, mapView)).then(interactions);
 
 sceneView.on('click', function(event) {

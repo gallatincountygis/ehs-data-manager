@@ -1,6 +1,7 @@
 import ResizeObserver from 'resize-observer-polyfill';
 import Measure from './widgets/Measure';
 import esri = __esri;
+import ViewToggle from './widgets/ViewToggle';
 
 interface InteractionParameters {
   layerListContainer: HTMLElement;
@@ -8,6 +9,7 @@ interface InteractionParameters {
   measure: Measure;
   basemapGallery: esri.BasemapGallery;
   editor: esri.Editor;
+  viewToggle: ViewToggle;
   widgetPanel: any;
   view: esri.MapView | esri.SceneView;
   mapView: esri.MapView;
@@ -23,6 +25,7 @@ export function interactions({
   measure,
   basemapGallery,
   editor,
+  viewToggle,
   widgetPanel,
   view,
   mapView
@@ -47,7 +50,7 @@ export function interactions({
       container: basemapGallery.container as HTMLElement
     },
     {
-      label: 'Editor',
+      label: 'Edit',
       container: editor.container as HTMLElement
     }
   ];
@@ -61,6 +64,11 @@ export function interactions({
         measure.disable();
       } else {
         measure.enable();
+      }
+      if (actionText == 'Edit') {
+        if (viewToggle.state == '2D') {
+          viewToggle.toggle();
+        }
       }
       widgetPanel.collapsed =
         widgetList.filter(w => {
