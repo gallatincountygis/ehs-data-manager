@@ -3,13 +3,21 @@
 import { subclass, declared, property } from 'esri/core/accessorSupport/decorators';
 import Widget from 'esri/widgets/Widget';
 import { tsx, renderable } from 'esri/widgets/support/widget';
-//import watchUtils = require('esri/core/watchUtils');
+import Measure from './Measure';
+import watchUtils from 'esri/core/watchUtils';
 
 import esri = __esri;
 
 interface ViewToggleParameters {
   initView: esri.SceneView | esri.MapView;
   otherView: esri.SceneView | esri.MapView;
+  widgets: {
+    layerList: esri.LayerList;
+    legend: esri.Legend;
+    measure: Measure;
+    basemapGallery: esri.BasemapGallery;
+    editor: esri.Editor;
+  };
 }
 
 const CSS = {
@@ -20,6 +28,15 @@ const CSS = {
 class ViewToggle extends declared(Widget) {
   sceneView: esri.SceneView;
   mapView: esri.MapView;
+  @property()
+  widgets: {
+    layerList?: esri.LayerList;
+    legend?: esri.Legend;
+    measure?: Measure;
+    basemapGallery?: esri.BasemapGallery;
+    editor?: esri.Editor;
+  };
+
   @property()
   activeView: esri.SceneView | esri.MapView;
   @property()
@@ -60,15 +77,26 @@ class ViewToggle extends declared(Widget) {
   }
 
   switchView(toView: esri.SceneView | esri.MapView) {
-    const viewPoint = this.activeView.viewpoint;
+    const viewPoint = this.activeView.viewpoint.clone();
     //const container = this.activeView.container;
+
     this.activeView.container.classList.toggle('hidden');
     toView.container.classList.remove('hidden');
     console.log(viewPoint);
-    toView.viewpoint = viewPoint;
-    toView.ui.add(this, 'top-left');
 
+    toView.ui.add(this, 'top-left');
     this.activeView = toView;
+
+    //toView.viewpoint = viewPoint;
+    for (const key in this.widgets) {
+      if (this.widgets[key].viewToggle) {
+        this.widgets[key].viewToggle?.(toView);
+      } else if (key == 'editor') {
+        continue;
+      } else {
+        this.widgets[key].view = toView;
+      }
+    }
   }
 
   toggle() {

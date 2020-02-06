@@ -5,20 +5,47 @@ import { wTSLayer, map } from './data/app';
 // MapView
 import SceneView from 'esri/views/SceneView';
 import MapView from 'esri/views/MapView';
+import Viewpoint from 'esri/Viewpoint';
 // widget utils
 import { initWidgets } from './widgets';
-import Editor from 'esri/widgets/Editor';
 // interactions
 import { interactions } from './interactions';
 import { drawRegulatoryBuffer } from './regulatory-buffer';
-
+import esri = __esri;
+import { Point } from 'esri/geometry';
 /**
  * Initialize application
  */
 
+const viewpoint = new Viewpoint({
+  rotation: 32.74273108334256,
+  scale: 9809049.34536391,
+  targetGeometry: new Point({
+    spatialReference: {
+      wkid: 102100
+    },
+    x: -12431608.276620537,
+    y: 6211820.033542403,
+    z: 1052.8817086927593
+  }),
+  camera: {
+    position: {
+      spatialReference: {
+        wkid: 102100
+      },
+      x: -11116885.381539581,
+      y: 4435696.605336761,
+      z: 2176363.1578471847
+    },
+    heading: 327.25726891665744,
+    tilt: 33.859258406057585
+  }
+});
+
 const sceneView = new SceneView({
   container: 'sceneViewDiv',
-  map
+  map,
+  viewpoint
 });
 
 const mapView = new MapView({
@@ -31,21 +58,9 @@ export const viewConfig = {
 };
 
 wTSLayer.when(() => {
-  sceneView.goTo(wTSLayer.fullExtent);
+  sceneView.goTo({ target: wTSLayer.fullExtent as esri.Extent, heading: 0 } as esri.GoToTarget3D);
 });
-// let editor;
-// mapView.when(mapView => {
-//   editor = new Editor({
-//     view: mapView,
-//     layerInfos: [
-//       {
-//         layer: wTSLayer
-//       }
-//     ],
-//     container: document.getElementById('widget-editor') as HTMLElement
-//   });
-//   //mapView.ui.add(editor, 'top-right');
-// });
+
 sceneView.when(() => initWidgets(sceneView, mapView)).then(interactions);
 
 sceneView.on('click', function(event) {

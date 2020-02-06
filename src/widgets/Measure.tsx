@@ -3,9 +3,19 @@
 
 import { subclass, declared, property } from 'esri/core/accessorSupport/decorators';
 import { renderable } from 'esri/widgets/support/widget';
-//import DirectLineMeasurement3D from 'esri/widgets/DirectLineMeasurement3D';
 import Measurement from 'esri/widgets/Measurement';
 import esri = __esri;
+
+interface Measure3DTool extends esri.DirectLineMeasurement3DViewModel {
+  tool: {
+    horizontalDistance: {
+      value: number;
+    };
+    verticalDistance: {
+      value: number;
+    };
+  };
+}
 
 @subclass('esri.widgets.Measure')
 class Measure extends declared(Measurement) {
@@ -15,17 +25,19 @@ class Measure extends declared(Measurement) {
   @property()
   @renderable()
   loadingSpan: HTMLSpanElement;
+  @property()
   stateWatch: esri.WatchHandle;
 
-  constructor(params?: any) {
+  constructor() {
     super();
   }
+
   disable() {
     this.clear();
-    console.log(this);
+    this.activeTool = null;
   }
   enable() {
-    this.activeTool = 'direct-line';
+    this.activeTool = this.view.type == '2d' ? 'distance' : 'direct-line';
     if (!this.stateWatch) {
       this.stateWatch = this.watch('viewModel.state', state => {
         switch (state) {
@@ -44,21 +56,31 @@ class Measure extends declared(Measurement) {
     console.log(this);
   }
 
+  viewToggle(toView: esri.SceneView | esri.MapView) {
+    this.clear();
+    this.view = toView;
+    if (!(this.container as HTMLElement).classList.contains('hidden')) {
+      this.activeTool = toView.type == '2d' ? 'distance' : 'direct-line';
+    }
+  }
+
   private addHydraulicGradientNodes() {
     if (this.container) {
       this.renderNow();
-      const section = (this?.container as HTMLElement).querySelectorAll('section')[1];
-      this.gradientNode = section?.lastElementChild?.cloneNode(true) as HTMLSpanElement;
-      if (this?.gradientNode?.firstElementChild && this?.gradientNode?.lastElementChild) {
-        (this.gradientNode.firstElementChild as HTMLSpanElement).innerText = 'Hydaulic Gradient';
-        const hydraulicGradient = (
-          (this.viewModel.activeViewModel as esri.DirectLineMeasurement3DViewModel).tool.verticalDistance.value /
-          this.viewModel.activeViewModel.tool.horizontalDistance.value /
-          3
-        ).toFixed(4);
-        (this.gradientNode.lastElementChild as HTMLSpanElement).innerText = hydraulicGradient;
+      if (this.activeTool == 'direct-line') {
+        const section = (this?.container as HTMLElement).querySelectorAll('section')[1];
+        this.gradientNode = section?.lastElementChild?.cloneNode(true) as HTMLSpanElement;
+        if (this?.gradientNode?.firstElementChild && this?.gradientNode?.lastElementChild) {
+          (this.gradientNode.firstElementChild as HTMLSpanElement).innerText = 'Hydraulic Gradient';
+          const hydraulicGradient = (
+            (this.viewModel.activeViewModel as Measure3DTool).tool.verticalDistance.value /
+            (this.viewModel.activeViewModel as Measure3DTool).tool.horizontalDistance.value /
+            3
+          ).toFixed(4);
+          (this.gradientNode.lastElementChild as HTMLSpanElement).innerText = hydraulicGradient;
+        }
+        section.appendChild(this.gradientNode);
       }
-      section.appendChild(this.gradientNode);
     }
   }
 }

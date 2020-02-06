@@ -15,7 +15,7 @@
     "noLib": false,
     "preserveConstEnums": true,
     "suppressImplicitAnyIndexErrors": true,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
 
     "outDir": "./build/",
     "sourceMap": true,

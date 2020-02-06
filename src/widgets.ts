@@ -1,11 +1,11 @@
 // Widgets
 import LayerList from 'esri/widgets/LayerList';
 import Legend from 'esri/widgets/Legend';
-import BasemapGallery from 'esri/widgets/BasemapGallery';
 import Compass from 'esri/widgets/Compass';
 //import Editor from './widgets/Editor';
 import Editor from 'esri/widgets/Editor';
 import Measure from './widgets/Measure';
+import BasemapGallery from './widgets/BasemapGallery';
 import ViewToggle from './widgets/ViewToggle';
 import { wTSLayer } from './data/app';
 
@@ -27,7 +27,17 @@ export function initWidgets(view: esri.SceneView, mapView: esri.MapView) {
     ],
     container: document.getElementById('widget-editor') as HTMLElement
   });
-  const viewToggle = new ViewToggle({ initView: view, otherView: mapView });
+  const viewToggle = new ViewToggle({
+    initView: view,
+    otherView: mapView,
+    widgets: {
+      layerList,
+      legend,
+      measure,
+      basemapGallery,
+      editor
+    }
+  });
   view.ui.add(viewToggle, 'top-left');
   //mapView.ui.add(viewToggle, 'top-left');
 

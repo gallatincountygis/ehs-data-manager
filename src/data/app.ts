@@ -1,8 +1,5 @@
 import FeatureLayer from 'esri/layers/FeatureLayer';
 import MapImageLayer from 'esri/layers/MapImageLayer';
-import GroupLayer from 'esri/layers/GroupLayer';
-//import TileLayer from 'esri/layers/TileLayer';
-//import VectorTileLayer from 'esri/layers/VectorTileLayer';
 import Map from 'esri/Map';
 import ElevationLayer from 'esri/layers/ElevationLayer';
 //import esri = __esri;
@@ -33,32 +30,6 @@ const elevationLayer = new ElevationLayer({
 const parcelsLayer = new FeatureLayer({
   url: 'https://gis.gallatin.mt.gov/arcgis/rest/services/MapServices/EHSBase/MapServer/7',
   title: 'Parcels'
-});
-
-const intermediateContoursLayer = new FeatureLayer({
-  url: 'https://carto.nationalmap.gov/arcgis/rest/services/contours/MapServer/26',
-  title: 'Intermediate Contours',
-  returnZ: false,
-  elevationInfo: {
-    mode: 'on-the-ground'
-  }
-});
-
-const indexContoursLayer = new FeatureLayer({
-  url: 'https://carto.nationalmap.gov/arcgis/rest/services/contours/MapServer/25',
-  title: 'Index Contours',
-  returnZ: false,
-  elevationInfo: {
-    mode: 'on-the-ground'
-  }
-});
-
-const contoursLayer = new GroupLayer({
-  title: 'Contours',
-  visible: false,
-  visibilityMode: 'inherited',
-  layers: [intermediateContoursLayer, indexContoursLayer],
-  opacity: 0.75
 });
 
 export const map = new Map({
