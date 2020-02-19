@@ -4,6 +4,9 @@ import { subclass, declared, property } from 'esri/core/accessorSupport/decorato
 import Widget from 'esri/widgets/Widget';
 import { tsx, renderable } from 'esri/widgets/support/widget';
 import Measure from './Measure';
+import BasemapGallery from './BasemapGallery';
+import Ground from 'esri/Ground';
+import { elevationLayer } from '../data/app';
 import watchUtils from 'esri/core/watchUtils';
 
 import esri = __esri;
@@ -15,7 +18,7 @@ interface ViewToggleParameters {
     layerList: esri.LayerList;
     legend: esri.Legend;
     measure: Measure;
-    basemapGallery: esri.BasemapGallery;
+    basemapGallery: BasemapGallery;
     editor: esri.Editor;
   };
 }
@@ -28,6 +31,9 @@ const CSS = {
 class ViewToggle extends declared(Widget) {
   sceneView: esri.SceneView;
   mapView: esri.MapView;
+  ground = new Ground({
+    layers: [elevationLayer]
+  });
   @property()
   widgets: {
     layerList?: esri.LayerList;
@@ -51,6 +57,7 @@ class ViewToggle extends declared(Widget) {
       this.sceneView = params.initView as esri.SceneView;
       this.mapView = params.otherView as esri.MapView;
       this.state = '2D';
+      //this.sceneView.map.ground = this.ground;
     } else {
       this.sceneView = params?.otherView as esri.SceneView;
       this.mapView = params?.initView as esri.MapView;
@@ -77,17 +84,8 @@ class ViewToggle extends declared(Widget) {
   }
 
   switchView(toView: esri.SceneView | esri.MapView) {
-    const viewPoint = this.activeView.viewpoint.clone();
+    const viewpoint = this.activeView.viewpoint.clone();
     //const container = this.activeView.container;
-
-    this.activeView.container.classList.toggle('hidden');
-    toView.container.classList.remove('hidden');
-    console.log(viewPoint);
-
-    toView.ui.add(this, 'top-left');
-    this.activeView = toView;
-
-    //toView.viewpoint = viewPoint;
     for (const key in this.widgets) {
       if (this.widgets[key].viewToggle) {
         this.widgets[key].viewToggle?.(toView);
@@ -97,6 +95,14 @@ class ViewToggle extends declared(Widget) {
         this.widgets[key].view = toView;
       }
     }
+
+    this.activeView.container.classList.toggle('hidden');
+    toView.container.classList.remove('hidden');
+    toView.ui.add(this, 'top-left');
+    this.activeView = toView;
+    watchUtils.whenFalseOnce(this.activeView.layerViewManager, 'updating', () => {
+      toView.viewpoint = viewpoint;
+    });
   }
 
   toggle() {

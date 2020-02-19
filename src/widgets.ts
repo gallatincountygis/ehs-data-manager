@@ -5,31 +5,57 @@ import Compass from 'esri/widgets/Compass';
 //import Editor from './widgets/Editor';
 import Editor from 'esri/widgets/Editor';
 import Measure from './widgets/Measure';
+import FieldConfig from 'esri/widgets/FeatureForm/FieldConfig';
 import BasemapGallery from './widgets/BasemapGallery';
 import ViewToggle from './widgets/ViewToggle';
-import { wTSLayer } from './data/app';
+import { display, wTSLayer } from './data/app';
 
 import esri = __esri;
+import { FieldsContent } from 'esri/popup/content';
 
-export function initWidgets(view: esri.SceneView, mapView: esri.MapView) {
-  const legend = new Legend({ view });
-  const layerList = new LayerList({ view });
-  const measure = new Measure({ view });
-  const basemapGallery = new BasemapGallery({ view });
+export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView) {
+  let initView;
+  let otherView;
+  if (display == '2D') {
+    initView = mapView;
+    otherView = sceneView;
+  } else {
+    initView = sceneView;
+    otherView = mapView;
+  }
+  const legend = new Legend({ view: initView });
+  const layerList = new LayerList({ view: initView });
+  const measure = new Measure({ view: initView, linearUnit: 'feet' });
+  const basemapGalleryContainer = document.getElementById('widget-basemap-gallery') as HTMLDivElement;
+  const basemapGallery = new BasemapGallery({ initView, otherView, container: basemapGalleryContainer });
   const compass = new Compass({ view: mapView });
   mapView.ui.add(compass, 'top-left');
   const editor = new Editor({
     view: mapView,
-    layerInfos: [
+    //layerInfos: [ ],
+    container: document.getElementById('widget-editor') as HTMLDivElement
+  });
+  wTSLayer.when(() => {
+    const wTSFieldConfig = wTSLayer.fields.map(f => {
+      const fc: esri.FieldConfig = {
+        description: f.description,
+        domain: f.domain,
+        editable: f.editable,
+        name: f.name,
+        label: f.alias
+      };
+      return fc;
+    }) as Array<FieldConfig>;
+    editor.layerInfos = [
       {
-        layer: wTSLayer
+        layer: wTSLayer,
+        fieldConfig: wTSFieldConfig
       }
-    ],
-    container: document.getElementById('widget-editor') as HTMLElement
+    ];
   });
   const viewToggle = new ViewToggle({
-    initView: view,
-    otherView: mapView,
+    initView,
+    otherView,
     widgets: {
       layerList,
       legend,
@@ -38,20 +64,20 @@ export function initWidgets(view: esri.SceneView, mapView: esri.MapView) {
       editor
     }
   });
-  view.ui.add(viewToggle, 'top-left');
+  initView.ui.add(viewToggle, 'top-left');
   //mapView.ui.add(viewToggle, 'top-left');
 
   // interactions
   const legendContainer = document.getElementById('widget-legend') as HTMLElement;
   const layerListContainer = document.getElementById('widget-layerlist') as HTMLElement;
   const measureContainer = document.getElementById('widget-measure') as HTMLElement;
-  const basemapGalleryContainer = document.getElementById('widget-basemap-gallery') as HTMLElement;
+
   //editor.container =
   const widgetPanel = document.getElementById('widget-panel');
 
   if (widgetPanel) {
-    view.padding = mapView.padding = {
-      ...view.padding,
+    sceneView.padding = mapView.padding = {
+      ...sceneView.padding,
       left: widgetPanel.offsetWidth
     };
   }
@@ -65,9 +91,9 @@ export function initWidgets(view: esri.SceneView, mapView: esri.MapView) {
   if (measureContainer) {
     measure.container = measureContainer;
   }
-  if (basemapGalleryContainer) {
-    basemapGallery.container = basemapGalleryContainer;
-  }
+  // if (basemapGalleryContainer) {
+  //   basemapGallery.container = basemapGalleryContainer;
+  // }
 
   return {
     layerListContainer,
@@ -77,7 +103,7 @@ export function initWidgets(view: esri.SceneView, mapView: esri.MapView) {
     editor,
     viewToggle,
     widgetPanel,
-    view,
+    sceneView,
     mapView
   };
 }

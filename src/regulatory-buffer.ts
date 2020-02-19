@@ -5,7 +5,7 @@ import esri = __esri;
 
 let graphic: Graphic;
 
-export function drawRegulatoryBuffer(response: esri.HitTestResult, view: esri.View | esri.SceneView) {
+export function drawRegulatoryBuffer(response: esri.HitTestResult, view: esri.View) {
   // check if a feature is returned from the hurricanesLayer
   // do something with the result graphic
   if (graphic) {

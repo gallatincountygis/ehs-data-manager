@@ -1,7 +1,7 @@
 // styles
 import './css/main.css';
 // Map data
-import { wTSLayer, map } from './data/app';
+import { wTSLayer, map, display } from './data/app';
 // MapView
 import SceneView from 'esri/views/SceneView';
 import MapView from 'esri/views/MapView';
@@ -18,7 +18,7 @@ import { Point } from 'esri/geometry';
  */
 
 const viewpoint = new Viewpoint({
-  rotation: 32.74273108334256,
+  rotation: 0,
   scale: 9809049.34536391,
   targetGeometry: new Point({
     spatialReference: {
@@ -27,44 +27,42 @@ const viewpoint = new Viewpoint({
     x: -12431608.276620537,
     y: 6211820.033542403,
     z: 1052.8817086927593
-  }),
-  camera: {
-    position: {
-      spatialReference: {
-        wkid: 102100
-      },
-      x: -11116885.381539581,
-      y: 4435696.605336761,
-      z: 2176363.1578471847
-    },
-    heading: 327.25726891665744,
-    tilt: 33.859258406057585
-  }
+  })
 });
 
 const sceneView = new SceneView({
   container: 'sceneViewDiv',
   map,
-  viewpoint
+  viewpoint,
+  popup: { defaultPopupTemplateEnabled: true },
+  qualityProfile: 'high'
 });
 
 const mapView = new MapView({
   container: 'mapViewDiv',
+  viewpoint,
+  popup: { defaultPopupTemplateEnabled: true },
   map
 });
+
+const initView = display === '2D' ? mapView : sceneView;
+initView.container.classList.remove('hidden');
+
 export const viewConfig = {
   sceneView,
   mapView
 };
 
 wTSLayer.when(() => {
-  sceneView.goTo({ target: wTSLayer.fullExtent as esri.Extent, heading: 0 } as esri.GoToTarget3D);
+  initView.goTo({ target: wTSLayer.fullExtent as esri.Extent, heading: 0 });
 });
 
-sceneView.when(() => initWidgets(sceneView, mapView)).then(interactions);
+initView.when(() => initWidgets(sceneView, mapView)).then(interactions);
 
-sceneView.on('click', function(event) {
-  sceneView.hitTest(event).then(function(response) {
-    drawRegulatoryBuffer(response, sceneView);
+for (const key in viewConfig) {
+  viewConfig[key].on('click', function(event: esri.MapViewClickEvent) {
+    viewConfig[key].hitTest(event).then(function(response: esri.HitTestResult) {
+      drawRegulatoryBuffer(response, viewConfig[key]);
+    });
   });
-});
+}

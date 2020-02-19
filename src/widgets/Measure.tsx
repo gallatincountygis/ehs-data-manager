@@ -28,7 +28,7 @@ class Measure extends declared(Measurement) {
   @property()
   stateWatch: esri.WatchHandle;
 
-  constructor() {
+  constructor(params?: any) {
     super();
   }
 

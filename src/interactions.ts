@@ -11,7 +11,7 @@ interface InteractionParameters {
   editor: esri.Editor;
   viewToggle: ViewToggle;
   widgetPanel: any;
-  view: esri.MapView | esri.SceneView;
+  sceneView: esri.SceneView;
   mapView: esri.MapView;
 }
 interface WidgetListItem {
@@ -27,7 +27,7 @@ export function interactions({
   editor,
   viewToggle,
   widgetPanel,
-  view,
+  sceneView,
   mapView
 }: InteractionParameters) {
   // toggle widgets
@@ -79,8 +79,8 @@ export function interactions({
 
   // listen for widget panel to be to be resized
   const rObserver = new ResizeObserver(() => {
-    view.padding = mapView.padding = {
-      ...view.padding,
+    sceneView.padding = mapView.padding = {
+      ...sceneView.padding,
       left: widgetPanel.offsetWidth
     };
   });
