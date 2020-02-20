@@ -63,7 +63,7 @@ class ViewToggle extends declared(Widget) {
       this.mapView = params?.initView as esri.MapView;
       this.state = '3D';
     }
-    this.activeView = params?.initView!;
+    this.activeView = params?.initView;
     //this.container = params?.initView.container!;
   }
 

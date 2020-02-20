@@ -11,7 +11,6 @@ import ViewToggle from './widgets/ViewToggle';
 import { display, wTSLayer } from './data/app';
 
 import esri = __esri;
-import { FieldsContent } from 'esri/popup/content';
 
 export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView) {
   let initView;
