@@ -4,6 +4,7 @@ import Map from 'esri/Map';
 import GroupLayer from 'esri/layers/GroupLayer';
 import ElevationLayer from 'esri/layers/ElevationLayer';
 import { addPopupsToMapImageLayer } from '../popup';
+import esri = __esri;
 
 export const display = '2D';
 
@@ -37,8 +38,6 @@ const addressLayer = new MapImageLayer({
   listMode: 'hide'
 });
 
-addressLayer.when().then(() => addPopupsToMapImageLayer(addressLayer));
-
 const addressGroupLayer = new GroupLayer({
   layers: [addressLayer, recentRecentAddressLayer],
   title: 'Addresses',
@@ -56,7 +55,6 @@ miscEHSLayer.when().then(() => {
   miscEHSLayer.sublayers = miscEHSLayer.sublayers.filter(s => {
     return s.id >= 2;
   });
-  addPopupsToMapImageLayer(miscEHSLayer);
 });
 
 const gwicLayer = new FeatureLayer({
@@ -103,8 +101,6 @@ cobMains.when().then(() => {
   ) {
     cobMains.sublayers = cobMains.sublayers.getItemAt(0).sublayers;
   }
-  //workaround until 4.15
-  addPopupsToMapImageLayer(cobMains);
 });
 
 const waterSewerDistricts = new FeatureLayer({
@@ -171,8 +167,9 @@ const floodHazardZonesLayer = new MapImageLayer({
 });
 
 const parcelsLayer = new FeatureLayer({
-  url: 'https://gis.gallatin.mt.gov/arcgis/rest/services/MapServices/EHSBase/MapServer/7',
-  title: 'Parcels',
+  portalItem: {
+    id: 'adb80ad0ba814391a68dd52b8bf27ada'
+  },
   id: 'parcels'
 });
 
@@ -197,3 +194,18 @@ export const map = new Map({
     addressGroupLayer
   ]
 });
+
+const walkDownLayers = (layers: esri.Collection<esri.Layer>) => {
+  layers.forEach(l => {
+    if (l.type === 'map-image') {
+      l.when().then(() => {
+        addPopupsToMapImageLayer(l as MapImageLayer);
+      });
+    }
+    if (l.layers) {
+      walkDownLayers(l.layers);
+    }
+  });
+};
+
+walkDownLayers(map.layers);

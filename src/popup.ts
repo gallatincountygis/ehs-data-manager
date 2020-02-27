@@ -12,13 +12,19 @@ export function popupSort(view: esri.View) {
   view.popup.features = featureList;
 }
 
-export function addPopupsToMapImageLayer(layer: esri.MapImageLayer) {
-  layer?.sublayers.forEach((sublayer: esri.Sublayer) => {
+function createPopupsFromFeatureLayer(sublayer: esri.Sublayer) {
+  if (!sublayer.popupTemplate)
     sublayer
       .createFeatureLayer()
       .then(featureLayer => featureLayer.load())
       .then(featureLayer => {
         sublayer.popupTemplate = featureLayer.createPopupTemplate();
       });
+}
+
+export function addPopupsToMapImageLayer(layer) {
+  layer?.sublayers?.forEach((sublayer: esri.Sublayer) => {
+    if (sublayer.sublayers) addPopupsToMapImageLayer(sublayer);
+    else createPopupsFromFeatureLayer(sublayer);
   });
 }
