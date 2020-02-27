@@ -3,7 +3,7 @@ import MapImageLayer from 'esri/layers/MapImageLayer';
 import Map from 'esri/Map';
 import GroupLayer from 'esri/layers/GroupLayer';
 import ElevationLayer from 'esri/layers/ElevationLayer';
-//import esri = __esri;
+import { addPopupsToMapImageLayer } from '../popup';
 
 export const display = '2D';
 
@@ -19,6 +19,44 @@ export const wTSLayer = new FeatureLayer({
   // elevationInfo: {
   //   mode: 'on-the-ground'
   // }
+});
+
+const recentRecentAddressLayer = new FeatureLayer({
+  portalItem: {
+    id: 'd88f46d2f52a4a6daa73ba10e605d761'
+  },
+  listMode: 'hide',
+  minScale: 24001,
+  legendEnabled: false
+});
+
+const addressLayer = new MapImageLayer({
+  portalItem: {
+    id: '9595acf80a45479890552f8d579bb763'
+  },
+  listMode: 'hide'
+});
+
+addressLayer.when().then(() => addPopupsToMapImageLayer(addressLayer));
+
+const addressGroupLayer = new GroupLayer({
+  layers: [addressLayer, recentRecentAddressLayer],
+  title: 'Addresses',
+  id: 'addressLayers',
+  visible: true
+});
+
+const miscEHSLayer = new MapImageLayer({
+  url: 'https://gis.gallatin.mt.gov/arcgis/rest/services/MapServices/EHS/MapServer',
+  title: 'Miscellaneous',
+  visible: false
+});
+
+miscEHSLayer.when().then(() => {
+  miscEHSLayer.sublayers = miscEHSLayer.sublayers.filter(s => {
+    return s.id >= 2;
+  });
+  addPopupsToMapImageLayer(miscEHSLayer);
 });
 
 const gwicLayer = new FeatureLayer({
@@ -56,9 +94,8 @@ const cobMains = new MapImageLayer({
   url: 'https://gisweb.bozeman.net/arcgis/rest/services/COB_Utilities/Wastewater_Utility/MapServer',
   title: 'Bozeman Wastewater',
   id: 'bznWastewater',
-  visible: false
+  visible: true
 });
-
 cobMains.when().then(() => {
   if (
     cobMains.sublayers?.getItemAt(0)?.sublayers &&
@@ -67,19 +104,27 @@ cobMains.when().then(() => {
     cobMains.sublayers = cobMains.sublayers.getItemAt(0).sublayers;
   }
   //workaround until 4.15
-  cobMains.sublayers.forEach(sublayer => {
-    sublayer
-      .createFeatureLayer()
-      .then(featureLayer => featureLayer.load())
-      .then(featureLayer => {
-        sublayer.popupTemplate = featureLayer.createPopupTemplate();
-      });
-  });
+  addPopupsToMapImageLayer(cobMains);
+});
+
+const waterSewerDistricts = new FeatureLayer({
+  url: 'http://gis.gallatin.mt.gov/arcgis/rest/services/MapServices/EHSBase/MapServer/11',
+  outFields: ['*'],
+  title: 'Water & Sewer Districts',
+  visible: true,
+  id: 'waterSewerDistricts'
+});
+
+const publicSystemsGroupLayer = new GroupLayer({
+  title: 'Public Systems',
+  id: 'publicWastewaterSystems',
+  visible: false,
+  layers: [cobMains, waterSewerDistricts]
 });
 
 const floodHazardZonesLayer = new MapImageLayer({
   title: 'Flood Hazard Zones',
-  url: 'http://hazards.fema.gov/gis/nfhl/rest/services/public/NFHL/MapServer',
+  url: 'https://hazards.fema.gov/gis/nfhl/rest/services/public/NFHL/MapServer',
   id: 'floodHazardZones',
   opacity: 0.5,
   visible: false,
@@ -141,5 +186,14 @@ export const map = new Map({
   ground: {
     layers: [elevationLayer]
   },
-  layers: [parcelsLayer, floodHazardZonesLayer, cobMains, deqGroupLayer, gwicLayer, wTSLayer]
+  layers: [
+    parcelsLayer,
+    floodHazardZonesLayer,
+    publicSystemsGroupLayer,
+    miscEHSLayer,
+    deqGroupLayer,
+    gwicLayer,
+    wTSLayer,
+    addressGroupLayer
+  ]
 });

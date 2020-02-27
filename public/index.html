@@ -5,12 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="mobile-web-app-capable" content="yes">
-  <title>EHS Demo App</title>
+  <title>EHS Data Manager</title>
   <link rel="shortcut icon" type="image/png" href="./favicon.ico"/>
 
   <link rel="stylesheet" href="https://js.arcgis.com/4.14/esri/themes/light/main.css">
   <link rel="stylesheet" href="https://unpkg.com/@esri/calcite-app-components@4.11.1/dist/calcite-app/calcite-app.css">
   <link rel="stylesheet" href="index.css">
+  <script type="module" src="https://unpkg.com/@esri/calcite-components@1.0.0-beta.20/dist/calcite/calcite.esm.js"></script>
+<script nomodule="" src="https://unpkg.com/@esri/calcite-components@1.0.0-beta.20/dist/calcite/calcite.js"></script>
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/@esri/calcite-components@1.0.0-beta.20/dist/calcite/calcite.css">
   <script src="https://unpkg.com/@esri/calcite-app-components@4.11.1/dist/calcite-app.js"></script>
   <script>
     var locationPath = location.pathname.replace(/\/[^\/]+$/, "");
@@ -29,9 +32,8 @@
 <body>
   <noscript> JavaScript is required in order to use this app </noscript>
   <div class="app-container">
-    <calcite-shell>
-      
-        <calcite-shell-panel id="widget-panel" slot="primary-panel" layout="leading">
+    <calcite-shell>      
+        <calcite-shell-panel id="widget-panel" slot="primary-panel" layout="leading" collapsed>
             <calcite-action-bar slot="action-bar">
               <calcite-action-group>
                 <calcite-action text="Legend">
@@ -50,7 +52,7 @@
             <div>
                 <calcite-block open>
                     <calcite-block-content>
-                        <div id="widget-legend"></div>
+                        <div id="widget-legend" class='hidden'></div>
                         <div id="widget-layerlist" class="hidden"></div>
                         <div id="widget-measure" class="hidden"></div>
                         <div id="widget-basemap-gallery" class="hidden"></div>
@@ -63,7 +65,7 @@
 
       <div slot="shell-header">
         <header class="header">
-          <h2 class="heading">EHS Demo App</h2>
+          <h2 class="heading">EHS Data Manager</h2>
         </header>
       </div>
       <div class="viewDiv hidden" id="sceneViewDiv"></div>

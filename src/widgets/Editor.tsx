@@ -3,6 +3,7 @@
 
 import { subclass, declared, property } from 'esri/core/accessorSupport/decorators';
 //import { renderable } from 'esri/widgets/support/widget';
+import '@esri/calcite-components';
 import Widgets from 'esri/widgets/Widget';
 import watchUtils from 'esri/core/watchUtils';
 import promiseUtils from 'esri/core/promiseUtils';
@@ -11,14 +12,12 @@ import ArcGISEditor from 'esri/widgets/Editor';
 import esri = __esri;
 
 interface BasemapGalleryParams {
-  initView: esri.SceneView | esri.MapView;
-  otherView: esri.SceneView | esri.MapView;
+  view: esri.SceneView | esri.MapView;
   container: HTMLDivElement;
 }
 
 @subclass('esri.widgets.Editor')
-class BasemapGallery extends declared(ArcGISEditor) {
-  editor: esri.Editor;
+class Editor extends declared(ArcGISEditor) {
   @property()
   container: HTMLDivElement;
   constructor(params?: BasemapGalleryParams) {
@@ -30,4 +29,4 @@ class BasemapGallery extends declared(ArcGISEditor) {
   viewToggle(toView: esri.SceneView | esri.MapView) {}
 }
 
-export default BasemapGallery;
+export default Editor;

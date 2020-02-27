@@ -5,7 +5,7 @@
   "scripts": {
     "build": "rollup -c --environment BUILD:production",
     "start": "rollup -cw  --environment BUILD:development",
-    "test": "jest"   
+    "test": "jest"
   },
   "postcss": {
     "map": false,
@@ -26,6 +26,7 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^7.0.0",
     "@rollup/plugin-typescript": "^2.1.0",
+    "@stencil/webpack": "0.0.6",
     "@types/arcgis-js-api": "^4.14.0",
     "@types/jest": "^24.0.25",
     "@typescript-eslint/eslint-plugin": "^2.15.0",
@@ -55,6 +56,7 @@
     "type": "calcite"
   },
   "dependencies": {
+    "@esri/calcite-components": "^1.0.0-beta.20",
     "resize-observer-polyfill": "^1.5.1"
   }
 }

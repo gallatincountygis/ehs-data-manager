@@ -100,9 +100,9 @@ class ViewToggle extends declared(Widget) {
     toView.container.classList.remove('hidden');
     toView.ui.add(this, 'top-left');
     this.activeView = toView;
-    watchUtils.whenFalseOnce(this.activeView.layerViewManager, 'updating', () => {
-      toView.viewpoint = viewpoint;
-    });
+    //watchUtils.whenFalseOnce(this.activeView.layerViewManager, 'updating', () => {
+    toView.viewpoint = viewpoint;
+    //});
   }
 
   toggle() {

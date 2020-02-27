@@ -1,13 +1,14 @@
 import ResizeObserver from 'resize-observer-polyfill';
 import Measure from './widgets/Measure';
+import BasemapGallery from './widgets/BasemapGallery';
 import esri = __esri;
 import ViewToggle from './widgets/ViewToggle';
 
-interface InteractionParameters {
+export interface InteractionParameters {
   layerListContainer: HTMLElement;
   legendContainer: HTMLElement;
   measure: Measure;
-  basemapGallery: esri.BasemapGallery;
+  basemapGallery: BasemapGallery;
   editor: esri.Editor;
   viewToggle: ViewToggle;
   widgetPanel: any;

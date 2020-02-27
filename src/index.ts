@@ -6,8 +6,10 @@ import { wTSLayer, map, display } from './data/app';
 import SceneView from 'esri/views/SceneView';
 import MapView from 'esri/views/MapView';
 import Viewpoint from 'esri/Viewpoint';
+import watchUtils from 'esri/core/watchUtils';
 // widget utils
 import { initWidgets } from './widgets';
+import { popupSort } from './popup';
 // interactions
 import { interactions } from './interactions';
 import { drawRegulatoryBuffer } from './regulatory-buffer';
@@ -18,15 +20,13 @@ import { Point } from 'esri/geometry';
  */
 
 const viewpoint = new Viewpoint({
-  rotation: 0,
-  scale: 9809049.34536391,
+  scale: 2300000,
   targetGeometry: new Point({
     spatialReference: {
       wkid: 102100
     },
-    x: -12431608.276620537,
-    y: 6211820.033542403,
-    z: 1052.8817086927593
+    x: -12481272,
+    y: 57002435
   })
 });
 
@@ -57,9 +57,17 @@ wTSLayer.when(() => {
   initView.goTo({ target: wTSLayer.fullExtent as esri.Extent, heading: 0 });
 });
 
-initView.when(() => initWidgets(sceneView, mapView)).then(interactions);
+initView
+  .when()
+  .then(() => initWidgets(sceneView, mapView))
+  .then(interactions);
 
 for (const key in viewConfig) {
+  viewConfig[key].when().then(
+    watchUtils.watch(viewConfig[key].popup, 'featureCount', () => {
+      popupSort(viewConfig[key]);
+    })
+  );
   viewConfig[key].on('click', function(event: esri.MapViewClickEvent) {
     viewConfig[key].hitTest(event).then(function(response: esri.HitTestResult) {
       drawRegulatoryBuffer(response, viewConfig[key]);

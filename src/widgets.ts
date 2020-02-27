@@ -3,16 +3,19 @@ import LayerList from 'esri/widgets/LayerList';
 import Legend from 'esri/widgets/Legend';
 import Compass from 'esri/widgets/Compass';
 //import Editor from './widgets/Editor';
-import Editor from 'esri/widgets/Editor';
+
 import Measure from './widgets/Measure';
 import FieldConfig from 'esri/widgets/FeatureForm/FieldConfig';
 import BasemapGallery from './widgets/BasemapGallery';
 import ViewToggle from './widgets/ViewToggle';
+import Editor from './widgets/Editor';
+import watchUtils from 'esri/core/watchUtils';
 import { display, wTSLayer } from './data/app';
+import { InteractionParameters } from './interactions';
 
 import esri = __esri;
 
-export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView) {
+export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView): InteractionParameters {
   let initView;
   let otherView;
   if (display == '2D') {
@@ -22,6 +25,7 @@ export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView) {
     initView = sceneView;
     otherView = mapView;
   }
+
   const legend = new Legend({ view: initView });
   const layerList = new LayerList({ view: initView });
   const measure = new Measure({ view: initView, linearUnit: 'feet' });
@@ -41,6 +45,7 @@ export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView) {
         domain: f.domain,
         editable: f.editable,
         name: f.name,
+        maxLength: f.length,
         label: f.alias
       };
       return fc;
