@@ -16,6 +16,7 @@ export const wTSLayer = new FeatureLayer({
   outFields: ['*'],
   title: 'Wastewater Treatment Systems',
   id: 'wwtp',
+  displayField: 'GCCHDWWTP',
   opacity: 0.8
   // elevationInfo: {
   //   mode: 'on-the-ground'
