@@ -39,17 +39,21 @@ export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView): I
     container: document.getElementById('widget-editor') as HTMLDivElement
   });
   wTSLayer.when(() => {
-    const wTSFieldConfig = wTSLayer.fields.map(f => {
-      const fc: esri.FieldConfig = {
-        description: f.description,
-        domain: f.domain,
-        editable: f.editable,
-        name: f.name,
-        maxLength: f.length,
-        label: f.alias
-      };
-      return fc;
-    }) as Array<FieldConfig>;
+    const wTSFieldConfig = wTSLayer.fields
+      .filter(f => {
+        f.name != 'FID';
+      })
+      .map(f => {
+        const fc: esri.FieldConfig = {
+          description: f.description,
+          domain: f.domain,
+          editable: f.editable,
+          name: f.name,
+          maxLength: f.length,
+          label: f.alias
+        };
+        return fc;
+      }) as Array<FieldConfig>;
     editor.layerInfos = [
       {
         layer: wTSLayer,

@@ -20,13 +20,13 @@ import { Point } from 'esri/geometry';
  */
 
 const viewpoint = new Viewpoint({
-  scale: 2300000,
+  scale: 288895,
   targetGeometry: new Point({
     spatialReference: {
       wkid: 102100
     },
-    x: -12481272,
-    y: 57002435
+    x: -12377880,
+    y: 5736061
   })
 });
 
@@ -54,7 +54,7 @@ export const viewConfig = {
 };
 
 wTSLayer.when(() => {
-  initView.goTo({ target: wTSLayer.fullExtent as esri.Extent, heading: 0 });
+  //initView.goTo({ target: wTSLayer.fullExtent as esri.Extent, heading: 0 });
 });
 
 initView
