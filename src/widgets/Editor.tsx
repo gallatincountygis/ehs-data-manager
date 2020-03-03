@@ -25,7 +25,6 @@ class Editor extends declared(ArcGISEditor) {
     //this.container = params.container;
     //this.editor = new ArcGISEditor(params);
   }
-
   viewToggle(toView: esri.SceneView | esri.MapView) {}
 }
 
