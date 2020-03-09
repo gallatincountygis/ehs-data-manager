@@ -23,6 +23,21 @@ export const wTSLayer = new FeatureLayer({
   // }
 });
 
+export const gwMLayer = new FeatureLayer({
+  portalItem: {
+    id: '1f9fddd5d5b04d86bc2e3166004ead93'
+    //id: '17a725a913cc415195ac9263e12e22e7'
+  },
+  outFields: ['*'],
+  title: 'Groundwater Monitoring Wells',
+  id: 'gwm',
+  displayField: 'GW_MONITOR',
+  opacity: 0.8
+  // elevationInfo: {
+  //   mode: 'on-the-ground'
+  // }
+});
+
 const recentRecentAddressLayer = new FeatureLayer({
   portalItem: {
     id: 'd88f46d2f52a4a6daa73ba10e605d761'
@@ -191,6 +206,7 @@ export const map = new Map({
     miscEHSLayer,
     deqGroupLayer,
     gwicLayer,
+    gwMLayer,
     wTSLayer,
     addressGroupLayer
   ]

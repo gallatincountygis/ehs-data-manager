@@ -10,7 +10,7 @@ import BasemapGallery from './widgets/BasemapGallery';
 import ViewToggle from './widgets/ViewToggle';
 import Editor from './widgets/Editor';
 import watchUtils from 'esri/core/watchUtils';
-import { display, wTSLayer } from './data/app';
+import { display, wTSLayer, gwMLayer } from './data/app';
 import { InteractionParameters } from './interactions';
 
 import esri = __esri;
@@ -54,12 +54,35 @@ export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView): I
         };
         return fc;
       }) as Array<FieldConfig>;
-    editor.layerInfos = [
+    editor.layerInfos = editor.layerInfos.concat([
       {
         layer: wTSLayer,
         fieldConfig: wTSFieldConfig
       }
-    ];
+    ]);
+  });
+  gwMLayer.when(() => {
+    const gwMFieldConfig = gwMLayer.fields
+      .filter(f => {
+        f.name != 'FID';
+      })
+      .map(f => {
+        const fc: esri.FieldConfig = {
+          description: f.description,
+          domain: f.domain,
+          editable: f.editable,
+          name: f.name,
+          maxLength: f.length,
+          label: f.alias
+        };
+        return fc;
+      }) as Array<FieldConfig>;
+    editor.layerInfos = editor.layerInfos.concat([
+      {
+        layer: gwMLayer,
+        fieldConfig: gwMFieldConfig
+      }
+    ]);
   });
   const viewToggle = new ViewToggle({
     initView,
