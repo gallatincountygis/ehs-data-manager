@@ -38,6 +38,10 @@ export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView): I
     container: document.getElementById('widget-editor') as HTMLDivElement
   });
   wTSLayer.when(() => {
+    if (wTSLayer.types[0].templates[0].prototype.attributes) {
+      wTSLayer.types[0].templates[0].prototype.attributes.SYSTEMTYPE = 'INDIV';
+      wTSLayer.types[0].templates[0].prototype.attributes.UPDATED = new Date();
+    }
     const wTSFieldConfig = wTSLayer.fields
       .filter(f => {
         return f.name != 'FID';

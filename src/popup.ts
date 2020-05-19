@@ -33,9 +33,6 @@ export function addPopupsToMapImageLayer(layer) {
 export async function getGWICPopup({ graphic }: esri.Feature) {
   const div = document.createElement('div');
   div.innerHTML =
-    '<b>GWIC Well: ' +
-    graphic.attributes['MNUMBER'] +
-    '</b><br>' +
     '<hr>' +
     '<table>' +
     '<tr><td>Site Name:</td><td>' +

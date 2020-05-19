@@ -37,7 +37,7 @@ export const gwMLayer = new FeatureLayer({
       outline: { width: 1.25, color: [2, 120, 240, 1] },
       //path: 'M 100 100 L 300 100 L 200 300 z',
       angle: 60,
-      color: [5, 207, 255, 1]
+      color: [5, 207, 255, 0.8]
     }
   },
   outFields: ['*'],
@@ -91,7 +91,10 @@ const gwicLayer = new FeatureLayer({
   title: 'GWIC Water Wells',
   visible: false,
   id: 'gwic',
-  popupTemplate: { content: getGWICPopup }
+  popupTemplate: {
+    title: 'GWIC Well: {MNUMBER}',
+    content: getGWICPopup
+  }
 });
 
 const dstResponseSitesLayer = new FeatureLayer({
