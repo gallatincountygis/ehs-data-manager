@@ -9,7 +9,6 @@ import FieldConfig from 'esri/widgets/FeatureForm/FieldConfig';
 import BasemapGallery from './widgets/BasemapGallery';
 import ViewToggle from './widgets/ViewToggle';
 import Editor from './widgets/Editor';
-import watchUtils from 'esri/core/watchUtils';
 import { display, wTSLayer, gwMLayer } from './data/app';
 import { InteractionParameters } from './interactions';
 
@@ -41,7 +40,7 @@ export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView): I
   wTSLayer.when(() => {
     const wTSFieldConfig = wTSLayer.fields
       .filter(f => {
-        f.name != 'FID';
+        return f.name != 'FID';
       })
       .map(f => {
         const fc: esri.FieldConfig = {
@@ -64,7 +63,7 @@ export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView): I
   gwMLayer.when(() => {
     const gwMFieldConfig = gwMLayer.fields
       .filter(f => {
-        f.name != 'FID';
+        return f.name !== 'FID';
       })
       .map(f => {
         const fc: esri.FieldConfig = {

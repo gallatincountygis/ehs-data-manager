@@ -4,10 +4,6 @@
 import { subclass, declared, property } from 'esri/core/accessorSupport/decorators';
 //import { renderable } from 'esri/widgets/support/widget';
 import '@esri/calcite-components';
-import Widgets from 'esri/widgets/Widget';
-import watchUtils from 'esri/core/watchUtils';
-import promiseUtils from 'esri/core/promiseUtils';
-import { tsx, renderable } from 'esri/widgets/support/widget';
 import ArcGISEditor from 'esri/widgets/Editor';
 import esri = __esri;
 

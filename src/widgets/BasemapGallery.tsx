@@ -9,9 +9,6 @@ import LocalBasemapsSource from 'esri/widgets/BasemapGallery/support/LocalBasema
 import ImageryLayer from 'esri/layers/ImageryLayer';
 import MapImageLayer from 'esri/layers/MapImageLayer';
 
-import watchUtils from 'esri/core/watchUtils';
-import promiseUtils from 'esri/core/promiseUtils';
-import { tsx, renderable } from 'esri/widgets/support/widget';
 import ArcGISBasemapGallery from 'esri/widgets/BasemapGallery';
 import esri = __esri;
 

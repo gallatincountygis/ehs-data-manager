@@ -3,7 +3,8 @@ import MapImageLayer from 'esri/layers/MapImageLayer';
 import Map from 'esri/Map';
 import GroupLayer from 'esri/layers/GroupLayer';
 import ElevationLayer from 'esri/layers/ElevationLayer';
-import { addPopupsToMapImageLayer } from '../popup';
+import { addPopupsToMapImageLayer, getGWICPopup } from '../popup';
+
 import esri = __esri;
 
 export const display = '2D';
@@ -27,6 +28,17 @@ export const gwMLayer = new FeatureLayer({
   portalItem: {
     id: '1f9fddd5d5b04d86bc2e3166004ead93'
     //id: '17a725a913cc415195ac9263e12e22e7'
+  },
+  renderer: {
+    type: 'simple',
+    symbol: {
+      type: 'simple-marker',
+      style: 'triangle',
+      outline: { width: 1.25, color: [2, 120, 240, 1] },
+      //path: 'M 100 100 L 300 100 L 200 300 z',
+      angle: 60,
+      color: [5, 207, 255, 1]
+    }
   },
   outFields: ['*'],
   title: 'Groundwater Monitoring Wells',
@@ -78,7 +90,8 @@ const gwicLayer = new FeatureLayer({
   outFields: ['*'],
   title: 'GWIC Water Wells',
   visible: false,
-  id: 'gwic'
+  id: 'gwic',
+  popupTemplate: { content: getGWICPopup }
 });
 
 const dstResponseSitesLayer = new FeatureLayer({
