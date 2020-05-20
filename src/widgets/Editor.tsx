@@ -9,6 +9,7 @@ import esri = __esri;
 
 interface BasemapGalleryParams {
   view: esri.SceneView | esri.MapView;
+  layerInfos: [];
   container: HTMLDivElement;
 }
 
@@ -20,8 +21,14 @@ class Editor extends declared(ArcGISEditor) {
     super();
     //this.container = params.container;
     //this.editor = new ArcGISEditor(params);
+    this.fireReady();
   }
-  viewToggle(toView: esri.SceneView | esri.MapView) {}
+  fireReady() {
+    this.emit('ready', this);
+  }
+  viewToggle(toView: esri.SceneView | esri.MapView) {
+    //console.log(this.layerInfos);
+  }
 }
 
 export default Editor;

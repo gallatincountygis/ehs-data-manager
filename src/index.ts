@@ -1,7 +1,8 @@
 // styles
 import './css/main.css';
 // Map data
-import { wTSLayer, map, display } from './data/app';
+import { map, display } from './data/app';
+import { wTSLayer } from './data/layers';
 // MapView
 import SceneView from 'esri/views/SceneView';
 import MapView from 'esri/views/MapView';

@@ -28,3 +28,12 @@ body {
 .hidden {
   display: none;
 }
+
+.title {
+  float:left;
+}
+
+#version {
+  float:right;
+  flex: 0 1 auto;
+}

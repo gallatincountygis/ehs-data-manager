@@ -5,14 +5,16 @@ import Compass from 'esri/widgets/Compass';
 //import Editor from './widgets/Editor';
 
 import Measure from './widgets/Measure';
-import FieldConfig from 'esri/widgets/FeatureForm/FieldConfig';
 import BasemapGallery from './widgets/BasemapGallery';
 import ViewToggle from './widgets/ViewToggle';
 import Editor from './widgets/Editor';
-import { display, wTSLayer, gwMLayer } from './data/app';
+import { display } from './data/app';
+import { wTSLayer, gwMLayer } from './data/layers';
 import { InteractionParameters } from './interactions';
 
 import esri = __esri;
+
+export let editor: esri.Editor;
 
 export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView): InteractionParameters {
   let initView;
@@ -32,60 +34,10 @@ export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView): I
   const basemapGallery = new BasemapGallery({ initView, otherView, container: basemapGalleryContainer });
   const compass = new Compass({ view: mapView });
   mapView.ui.add(compass, 'top-left');
-  const editor = new Editor({
+  editor = new Editor({
     view: mapView,
-    //layerInfos: [ ],
+    layerInfos: [],
     container: document.getElementById('widget-editor') as HTMLDivElement
-  });
-  wTSLayer.when(() => {
-    if (wTSLayer.types[0].templates[0].prototype.attributes) {
-      wTSLayer.types[0].templates[0].prototype.attributes.SYSTEMTYPE = 'INDIV';
-      wTSLayer.types[0].templates[0].prototype.attributes.UPDATED = new Date();
-    }
-    const wTSFieldConfig = wTSLayer.fields
-      .filter(f => {
-        return f.name != 'FID';
-      })
-      .map(f => {
-        const fc: esri.FieldConfig = {
-          description: f.description,
-          domain: f.domain,
-          editable: f.editable,
-          name: f.name,
-          maxLength: f.length,
-          label: f.alias
-        };
-        return fc;
-      }) as Array<FieldConfig>;
-    editor.layerInfos = editor.layerInfos.concat([
-      {
-        layer: wTSLayer,
-        fieldConfig: wTSFieldConfig
-      }
-    ]);
-  });
-  gwMLayer.when(() => {
-    const gwMFieldConfig = gwMLayer.fields
-      .filter(f => {
-        return f.name !== 'FID';
-      })
-      .map(f => {
-        const fc: esri.FieldConfig = {
-          description: f.description,
-          domain: f.domain,
-          editable: f.editable,
-          name: f.name,
-          maxLength: f.length,
-          label: f.alias
-        };
-        return fc;
-      }) as Array<FieldConfig>;
-    editor.layerInfos = editor.layerInfos.concat([
-      {
-        layer: gwMLayer,
-        fieldConfig: gwMFieldConfig
-      }
-    ]);
   });
   const viewToggle = new ViewToggle({
     initView,

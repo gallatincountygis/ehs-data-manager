@@ -1,6 +1,6 @@
 import Graphic from 'esri/Graphic';
 import geometryEngine from 'esri/geometry/geometryEngine';
-import { wTSLayer } from './data/app';
+import { wTSLayer } from './data/layers';
 import esri = __esri;
 
 let graphic: Graphic;

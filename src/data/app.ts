@@ -4,51 +4,13 @@ import Map from 'esri/Map';
 import GroupLayer from 'esri/layers/GroupLayer';
 import ElevationLayer from 'esri/layers/ElevationLayer';
 import { addPopupsToMapImageLayer, getGWICPopup } from '../popup';
-
+import { gwMLayer, wTSLayer } from './layers';
 import esri = __esri;
 
+const version = '1.1';
+document.getElementById('version').innerText = 'v:' + version;
+
 export const display = '2D';
-
-export const wTSLayer = new FeatureLayer({
-  portalItem: {
-    id: '49e1606446f34f93807b1fc437be53c9'
-    //id: '17a725a913cc415195ac9263e12e22e7'
-  },
-  outFields: ['*'],
-  title: 'Wastewater Treatment Systems',
-  id: 'wwtp',
-  displayField: 'GCCHDWWTP',
-  opacity: 0.8
-  // elevationInfo: {
-  //   mode: 'on-the-ground'
-  // }
-});
-
-export const gwMLayer = new FeatureLayer({
-  portalItem: {
-    id: '1f9fddd5d5b04d86bc2e3166004ead93'
-    //id: '17a725a913cc415195ac9263e12e22e7'
-  },
-  renderer: {
-    type: 'simple',
-    symbol: {
-      type: 'simple-marker',
-      style: 'triangle',
-      outline: { width: 1.25, color: [2, 120, 240, 1] },
-      //path: 'M 100 100 L 300 100 L 200 300 z',
-      angle: 60,
-      color: [5, 207, 255, 0.8]
-    }
-  },
-  outFields: ['*'],
-  title: 'Groundwater Monitoring Wells',
-  id: 'gwm',
-  displayField: 'GW_MONITOR',
-  opacity: 0.8
-  // elevationInfo: {
-  //   mode: 'on-the-ground'
-  // }
-});
 
 const recentRecentAddressLayer = new FeatureLayer({
   portalItem: {
