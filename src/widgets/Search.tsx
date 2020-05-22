@@ -5,9 +5,10 @@ import { subclass, declared, property } from 'esri/core/accessorSupport/decorato
 //import { renderable } from 'esri/widgets/support/widget';
 import Widget from 'esri/widgets/Widget';
 import { tsx, renderable } from 'esri/widgets/support/widget';
-
 import Basemap from 'esri/Basemap';
 import ArcGISSearch from 'esri/widgets/Search';
+import LayerSearchSource from 'esri/widgets/Search/LayerSearchSource';
+import { wTSLayer } from '../data/layers';
 import esri = __esri;
 
 interface SearchParams {
@@ -31,6 +32,24 @@ class Search extends declared(ArcGISSearch) {
     //   this.sceneView = params?.otherView as esri.SceneView;
     //   this.mapView = params?.initView as esri.MapView;
     // }
+    this.addWWTSLayer();
+    this.on('select-result', function(event) {
+      this.view.goTo({ zoom: 18 });
+    });
+  }
+
+  addWWTSLayer() {
+    this.sources.add(
+      new LayerSearchSource({
+        layer: wTSLayer,
+        searchFields: ['GCCHDWWTP'],
+        displayField: 'GCCHDWWTP',
+        exactMatch: true,
+        name: 'Permit Number',
+        placeholder: 'enter a permit number',
+        zoomScale: 1000
+      })
+    );
   }
 
   viewToggle(toView: esri.SceneView | esri.MapView) {
