@@ -8,6 +8,7 @@ import Measure from './widgets/Measure';
 import BasemapGallery from './widgets/BasemapGallery';
 import ViewToggle from './widgets/ViewToggle';
 import Editor from './widgets/Editor';
+import Search from './widgets/Search';
 import { display } from './data/app';
 import { wTSLayer, gwMLayer } from './data/layers';
 import { InteractionParameters } from './interactions';
@@ -34,11 +35,19 @@ export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView): I
   const basemapGallery = new BasemapGallery({ initView, otherView, container: basemapGalleryContainer });
   const compass = new Compass({ view: mapView });
   mapView.ui.add(compass, 'top-left');
+
+  const search = new Search({
+    view: initView,
+    otherView
+  });
+  initView.ui.add(search, { position: 'top-left', index: 0 });
+
   editor = new Editor({
     view: mapView,
     layerInfos: [],
     container: document.getElementById('widget-editor') as HTMLDivElement
   });
+
   const viewToggle = new ViewToggle({
     initView,
     otherView,
@@ -47,7 +56,8 @@ export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView): I
       legend,
       measure,
       basemapGallery,
-      editor
+      editor,
+      search
     }
   });
   initView.ui.add(viewToggle, 'top-left');

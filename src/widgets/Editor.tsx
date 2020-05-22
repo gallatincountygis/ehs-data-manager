@@ -7,7 +7,7 @@ import '@esri/calcite-components';
 import ArcGISEditor from 'esri/widgets/Editor';
 import esri = __esri;
 
-interface BasemapGalleryParams {
+interface EditorParams {
   view: esri.SceneView | esri.MapView;
   layerInfos: [];
   container: HTMLDivElement;
@@ -17,7 +17,7 @@ interface BasemapGalleryParams {
 class Editor extends declared(ArcGISEditor) {
   @property()
   container: HTMLDivElement;
-  constructor(params?: BasemapGalleryParams) {
+  constructor(params?: EditorParams) {
     super();
     //this.container = params.container;
     //this.editor = new ArcGISEditor(params);
@@ -27,6 +27,8 @@ class Editor extends declared(ArcGISEditor) {
     this.emit('ready', this);
   }
   viewToggle(toView: esri.SceneView | esri.MapView) {
+    this.view = toView.hasOwnProperty('camera') ? null : (toView as esri.MapView);
+    //console.log('editing');
     //console.log(this.layerInfos);
   }
 }

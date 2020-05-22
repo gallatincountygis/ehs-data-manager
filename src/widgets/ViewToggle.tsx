@@ -20,6 +20,7 @@ interface ViewToggleParameters {
     measure: Measure;
     basemapGallery: BasemapGallery;
     editor: esri.Editor;
+    search: esri.Search;
   };
 }
 
@@ -41,6 +42,7 @@ class ViewToggle extends declared(Widget) {
     measure?: Measure;
     basemapGallery?: esri.BasemapGallery;
     editor?: esri.Editor;
+    search?: esri.Search;
   };
 
   @property()

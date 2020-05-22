@@ -16,6 +16,7 @@ export const wTSLayer = new FeatureLayer({
 wTSLayer.when(() => {
   if (wTSLayer.types[0].templates[0].prototype.attributes) {
     wTSLayer.types[0].templates[0].prototype.attributes.SYSTEMTYPE = 'INDIV';
+    wTSLayer.types[0].templates[0].prototype.attributes.GPS = 'N';
     wTSLayer.types[0].templates[0].prototype.attributes.UPDATED = new Date();
   }
   const wTSFieldConfig = wTSLayer.fields
@@ -33,11 +34,7 @@ wTSLayer.when(() => {
       } as esri.FieldConfig;
       return fc;
     }) as esri.FieldConfig[];
-  editor
-    ? addLayerInfos(wTSLayer, wTSFieldConfig)
-    : editor.on('ready', () => {
-        addLayerInfos(wTSLayer, wTSFieldConfig);
-      });
+  addLayerInfos(wTSLayer, wTSFieldConfig);
 });
 
 export const gwMLayer = new FeatureLayer({
@@ -77,11 +74,7 @@ gwMLayer.when(() => {
       } as esri.FieldConfig;
       return fc;
     }) as esri.FieldConfig[];
-  editor
-    ? addLayerInfos(gwMLayer, gwMFieldConfig)
-    : editor.on('ready', () => {
-        addLayerInfos(gwMLayer, gwMFieldConfig);
-      });
+  addLayerInfos(gwMLayer, gwMFieldConfig);
 });
 
 function addLayerInfos(layer: esri.FeatureLayer, fieldConfig: esri.FieldConfig[]) {

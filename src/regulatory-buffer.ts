@@ -13,16 +13,18 @@ export function drawRegulatoryBuffer(response: esri.HitTestResult, view: esri.Vi
   }
   const hitgraphic = response.results.filter(function(result) {
     return result.graphic.layer === wTSLayer;
-  })[0].graphic;
-  const septicBuffer = geometryEngine.geodesicBuffer(hitgraphic.geometry, 200, 'feet') as esri.Geometry;
-  const bufferGraphic = new Graphic({
-    geometry: septicBuffer,
-    symbol: {
-      type: 'simple-fill',
-      outline: { width: 2, color: [255, 170, 0, 1] },
-      color: [0, 0, 0, 0]
-    } as esri.SymbolProperties
-  });
-  graphic = bufferGraphic;
-  view.graphics.add(bufferGraphic);
+  })[0]?.graphic;
+  if (hitgraphic) {
+    const septicBuffer = geometryEngine.geodesicBuffer(hitgraphic.geometry, 200, 'feet') as esri.Geometry;
+    const bufferGraphic = new Graphic({
+      geometry: septicBuffer,
+      symbol: {
+        type: 'simple-fill',
+        outline: { width: 2, color: [255, 170, 0, 1] },
+        color: [0, 0, 0, 0]
+      } as esri.SymbolProperties
+    });
+    graphic = bufferGraphic;
+    view.graphics.add(bufferGraphic);
+  }
 }
