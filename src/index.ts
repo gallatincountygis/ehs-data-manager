@@ -16,6 +16,7 @@ import { interactions } from './interactions';
 import { drawRegulatoryBuffer } from './regulatory-buffer';
 import esri = __esri;
 import { Point } from 'esri/geometry';
+import { getPermit } from './tyler';
 /**
  * Initialize application
  */
@@ -64,11 +65,16 @@ initView
   .then(interactions);
 
 for (const key in viewConfig) {
-  viewConfig[key].when().then(
+  viewConfig[key].when().then(() => {
     watchUtils.watch(viewConfig[key].popup, 'featureCount', () => {
       popupSort(viewConfig[key]);
-    })
-  );
+    });
+    viewConfig[key].popup.viewModel.on('trigger-action', function(e: esri.PopupTriggerActionEvent) {
+      if (e.action.id === 'get-permit') {
+        getPermit(e);
+      }
+    });
+  });
   viewConfig[key].on('click', function(event: esri.MapViewClickEvent) {
     viewConfig[key].hitTest(event).then(function(response: esri.HitTestResult) {
       drawRegulatoryBuffer(response, viewConfig[key]);

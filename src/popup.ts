@@ -1,10 +1,9 @@
-import * as promiseUtils from 'esri/core/promiseUtils';
 import esri = __esri;
+
 export function popupSort(view: esri.View) {
   if (view.popup.featureCount === 0) {
     return;
   }
-  console.log(view.popup.featureCount);
   const featureList = view.popup.features.sort((a, b) => {
     const aLayer = a.layer || a.sourceLayer.layer;
     const bLayer = b.layer || b.sourceLayer.layer;

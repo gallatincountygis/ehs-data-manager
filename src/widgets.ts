@@ -10,7 +10,6 @@ import ViewToggle from './widgets/ViewToggle';
 import Editor from './widgets/Editor';
 import Search from './widgets/Search';
 import { display } from './data/app';
-import { wTSLayer, gwMLayer } from './data/layers';
 import { InteractionParameters } from './interactions';
 
 import esri = __esri;

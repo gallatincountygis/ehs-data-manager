@@ -10,7 +10,23 @@ export const wTSLayer = new FeatureLayer({
   title: 'Wastewater Treatment Systems',
   id: 'wwtp',
   displayField: 'GCCHDWWTP',
-  opacity: 0.8
+  opacity: 0.8,
+  popupTemplate: {
+    title: 'Permit Number: {GCCHDWWTP}',
+    actions: [
+      {
+        title: 'Get permit',
+        id: 'get-permit',
+        className: 'esri-icon-documentation'
+      } as esri.ActionButton
+    ],
+    content: [
+      {
+        type: 'fields',
+        fieldInfos: []
+      }
+    ]
+  }
 });
 
 wTSLayer.when(() => {
@@ -19,11 +35,16 @@ wTSLayer.when(() => {
     wTSLayer.types[0].templates[0].prototype.attributes.GPS = 'N';
     wTSLayer.types[0].templates[0].prototype.attributes.UPDATED = new Date();
   }
+  //wTSLayer.popupTemplate.content[0].fieldInfos = wTSLayer.fields.map((f: esri.Field) => {});
   const wTSFieldConfig = wTSLayer.fields
-    .filter(f => {
+    .filter((f: esri.Field) => {
       return f.name != 'FID';
     })
-    .map(f => {
+    .map((f: esri.Field) => {
+      wTSLayer.popupTemplate.content[0].fieldInfos.push({
+        fieldName: f.name,
+        label: f.alias
+      });
       const fc = {
         description: f.description,
         domain: f.domain as esri.CodedValueDomain | esri.RangeDomain,
@@ -50,7 +71,7 @@ export const gwMLayer = new FeatureLayer({
       angle: 60,
       color: [5, 207, 255, 0.8]
     }
-  },
+  } as esri.SimpleRendererProperties,
   outFields: ['*'],
   title: 'Groundwater Monitoring Wells',
   id: 'gwm',

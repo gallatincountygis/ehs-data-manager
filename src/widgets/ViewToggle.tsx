@@ -5,6 +5,7 @@ import Widget from 'esri/widgets/Widget';
 import { tsx, renderable } from 'esri/widgets/support/widget';
 import Measure from './Measure';
 import BasemapGallery from './BasemapGallery';
+import Search from './Search';
 import Ground from 'esri/Ground';
 import { elevationLayer } from '../data/app';
 import watchUtils from 'esri/core/watchUtils';
@@ -20,7 +21,7 @@ interface ViewToggleParameters {
     measure: Measure;
     basemapGallery: BasemapGallery;
     editor: esri.Editor;
-    search: esri.Search;
+    search: Search;
   };
 }
 
