@@ -71,7 +71,8 @@ for (const key in viewConfig) {
     });
     viewConfig[key].popup.viewModel.on('trigger-action', function(e: esri.PopupTriggerActionEvent) {
       if (e.action.id === 'get-permit') {
-        getPermit(e);
+        const w = window.open('', '_blank');
+        getPermit(e, w);
       }
     });
   });

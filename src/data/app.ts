@@ -7,7 +7,7 @@ import { addPopupsToMapImageLayer, getGWICPopup } from '../popup';
 import { gwMLayer, wTSLayer } from './layers';
 import esri = __esri;
 
-const version = '1.2.2';
+const version = '1.2.3';
 document.getElementById('version').innerText = 'v:' + version;
 
 export const display = '2D';

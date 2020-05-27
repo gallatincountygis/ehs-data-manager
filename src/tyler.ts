@@ -1,5 +1,9 @@
 import esri = __esri;
 
+interface PopupActionEvent extends esri.PopupTriggerActionEvent {
+  target?: esri.Popup;
+}
+
 export function getTylerLink(view: esri.View) {
   if (view.popup.featureCount === 0) {
     return;
@@ -10,7 +14,7 @@ export function getTylerLink(view: esri.View) {
   });
 }
 
-export async function getPermit(e: esri.PopupTriggerActionEvent) {
+export async function getPermit(e: PopupActionEvent, w: Window) {
   const className = e.action.className;
   const title = e.action.title;
   try {
@@ -22,11 +26,15 @@ export async function getPermit(e: esri.PopupTriggerActionEvent) {
     });
     const doc = await response.json();
     if (doc?.documentid) {
-      window.open('http://eagleweb.gallatin.mt.gov/eaglecm/eagleweb/viewDoc.jsp?node=' + doc.documentid, '_blank');
+      w.location.href = 'http://eagleweb.gallatin.mt.gov/eaglecm/eagleweb/viewDoc.jsp?node=' + doc.documentid;
+      w.focus();
+      //window.open('http://eagleweb.gallatin.mt.gov/eaglecm/eagleweb/viewDoc.jsp?node=' + doc.documentid, '_blank');
     } else {
+      w.close();
       alert('nothing found');
     }
   } catch (err) {
+    w.close();
     alert(err);
   } finally {
     e.action.className = className;
