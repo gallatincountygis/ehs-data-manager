@@ -24,7 +24,7 @@ function createPopupsFromFeatureLayer(sublayer: esri.Sublayer) {
       });
 }
 
-export function addPopupsToMapImageLayer(layer) {
+export function addPopupsToMapImageLayer(layer: esri.MapImageLayer | esri.Sublayer) {
   layer?.sublayers?.forEach((sublayer: esri.Sublayer) => {
     if (sublayer.sublayers) addPopupsToMapImageLayer(sublayer);
     else createPopupsFromFeatureLayer(sublayer);

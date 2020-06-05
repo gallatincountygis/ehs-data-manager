@@ -60,14 +60,11 @@ export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView): I
     }
   });
   initView.ui.add(viewToggle, 'top-left');
-  //mapView.ui.add(viewToggle, 'top-left');
 
   // interactions
   const legendContainer = document.getElementById('widget-legend') as HTMLElement;
   const layerListContainer = document.getElementById('widget-layerlist') as HTMLElement;
   const measureContainer = document.getElementById('widget-measure') as HTMLElement;
-
-  //editor.container =
   const widgetPanel = document.getElementById('widget-panel');
 
   if (widgetPanel) {

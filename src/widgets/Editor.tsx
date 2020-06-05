@@ -5,6 +5,7 @@ import { subclass, declared, property } from 'esri/core/accessorSupport/decorato
 //import { renderable } from 'esri/widgets/support/widget';
 import '@esri/calcite-components';
 import ArcGISEditor from 'esri/widgets/Editor';
+import * as watchUtils from 'esri/core/watchUtils';
 import esri = __esri;
 
 interface EditorParams {
@@ -22,6 +23,7 @@ class Editor extends declared(ArcGISEditor) {
     //this.container = params.container;
     //this.editor = new ArcGISEditor(params);
     this.fireReady();
+    watchUtils.watch(this.viewModel, 'state', this.onAwaitingFeature);
   }
   fireReady() {
     this.emit('ready', this);
@@ -30,6 +32,11 @@ class Editor extends declared(ArcGISEditor) {
     this.view = toView.hasOwnProperty('camera') ? null : (toView as esri.MapView);
     //console.log('editing');
     //console.log(this.layerInfos);
+  }
+  onAwaitingFeature(state: string) {
+    if (['awaiting-feature-to-update', 'awaiting-feature-to-create'].indexOf(state) >= 0) {
+      this.view?.popup?.close();
+    }
   }
 }
 
