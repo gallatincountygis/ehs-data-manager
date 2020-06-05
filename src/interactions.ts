@@ -76,7 +76,7 @@ export function interactions({
           viewToggle.toggle();
         }
       } else {
-        editor?.viewModel?.cancelWorkflow();
+        editor?.activeWorkflow && editor?.viewModel?.cancelWorkflow();
       }
       widgetPanel.collapsed =
         widgetList.filter(w => {
