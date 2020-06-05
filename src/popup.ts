@@ -1,4 +1,6 @@
+import { editor } from './widgets';
 import esri = __esri;
+import { openEditor } from './interactions';
 
 export function popupSort(view: esri.View) {
   if (view.popup.featureCount === 0) {
@@ -45,4 +47,13 @@ export async function getGWICPopup({ graphic }: esri.Feature) {
     graphic.attributes['MNUMBER'] +
     "' target=_blank>View Well Log Report</a><br/>";
   return div;
+}
+
+export function editThis(view: esri.MapView | esri.SceneView) {
+  // If the EditorViewModel's activeWorkflow is null, make the popup not visible
+  if (!editor.viewModel.activeWorkflow) {
+    view.popup.visible = false;
+    editor.startUpdateWorkflowAtFeatureEdit(view.popup.selectedFeature);
+    setTimeout(openEditor, 100);
+  }
 }

@@ -1,4 +1,5 @@
 import FeatureLayer from 'esri/layers/FeatureLayer';
+import { addPopupsToMapImageLayer } from '../popup';
 import { editor } from '../widgets';
 import esri = __esri;
 
@@ -18,8 +19,13 @@ export const wTSLayer = new FeatureLayer({
         title: 'Get permit',
         id: 'get-permit',
         className: 'esri-icon-documentation'
-      } as esri.ActionButton
-    ],
+      },
+      {
+        title: 'Edit feature',
+        id: 'edit-this',
+        className: 'esri-icon-edit'
+      }
+    ] as esri.ActionButton[],
     content: [
       {
         type: 'fields',
@@ -98,9 +104,50 @@ gwMLayer.when(() => {
   addLayerInfos(gwMLayer, gwMFieldConfig);
 });
 
+export const notesLayer = new FeatureLayer({
+  portalItem: {
+    id: '9d8ecc343fad4ffdb5c094647f78690e'
+  }
+});
+
+notesLayer.when(() => {
+  const notesLayerFieldConfig = notesLayer.fields
+    .filter(f => {
+      return f.name === 'Notes';
+    })
+    .map((f: esri.Field) => {
+      return {
+        description: f.description,
+        domain: f.domain,
+        editable: f.editable,
+        name: f.name,
+        maxLength: f.length,
+        label: f.alias,
+        editorType: 'text-area'
+      };
+    }) as esri.FieldConfig[];
+  editor.layerInfos.push({
+    layer: notesLayer,
+    fieldConfig: notesLayerFieldConfig
+  });
+});
+
 function addLayerInfos(layer: esri.FeatureLayer, fieldConfig: esri.FieldConfig[]) {
   editor.layerInfos.push({
     layer,
     fieldConfig
+  });
+}
+
+export function walkDownLayers(layers: esri.Collection<esri.Layer>) {
+  layers.forEach(l => {
+    if (l.type === 'map-image') {
+      l.when().then(() => {
+        addPopupsToMapImageLayer(l as esri.MapImageLayer);
+      });
+    }
+    if (l.layers) {
+      walkDownLayers(l.layers);
+    }
   });
 }

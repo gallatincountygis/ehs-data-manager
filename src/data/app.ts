@@ -3,11 +3,11 @@ import MapImageLayer from 'esri/layers/MapImageLayer';
 import Map from 'esri/Map';
 import GroupLayer from 'esri/layers/GroupLayer';
 import ElevationLayer from 'esri/layers/ElevationLayer';
-import { addPopupsToMapImageLayer, getGWICPopup } from '../popup';
-import { gwMLayer, wTSLayer } from './layers';
+import { getGWICPopup } from '../popup';
+import { gwMLayer, wTSLayer, notesLayer, walkDownLayers } from './layers';
 import esri = __esri;
 
-const version = '1.2.3';
+const version = '1.2.4';
 document.getElementById('version').innerText = 'v:' + version;
 
 export const display = '2D';
@@ -184,23 +184,11 @@ export const map = new Map({
     miscEHSLayer,
     deqGroupLayer,
     gwicLayer,
+    notesLayer,
     gwMLayer,
     wTSLayer,
     addressGroupLayer
   ]
 });
-
-const walkDownLayers = (layers: esri.Collection<esri.Layer>) => {
-  layers.forEach(l => {
-    if (l.type === 'map-image') {
-      l.when().then(() => {
-        addPopupsToMapImageLayer(l as MapImageLayer);
-      });
-    }
-    if (l.layers) {
-      walkDownLayers(l.layers);
-    }
-  });
-};
 
 walkDownLayers(map.layers);

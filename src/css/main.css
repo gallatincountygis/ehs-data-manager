@@ -50,3 +50,7 @@ body {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+#widget-editor textarea {
+  min-height:150px;
+}

@@ -1,6 +1,7 @@
 import ResizeObserver from 'resize-observer-polyfill';
 import Measure from './widgets/Measure';
 import BasemapGallery from './widgets/BasemapGallery';
+import { editor } from './widgets';
 import esri = __esri;
 import ViewToggle from './widgets/ViewToggle';
 
@@ -20,6 +21,10 @@ interface WidgetListItem {
   container: HTMLElement;
 }
 
+let widgetList: WidgetListItem[];
+let actions: HTMLElement[];
+let editAction: Element;
+
 export function interactions({
   layerListContainer,
   legendContainer,
@@ -32,8 +37,8 @@ export function interactions({
   mapView
 }: InteractionParameters) {
   // toggle widgets
-  const actions = Array.from(document.querySelectorAll('calcite-action'));
-  const widgetList: WidgetListItem[] = [
+  actions = Array.from(document.querySelectorAll('calcite-action'));
+  widgetList = [
     {
       label: 'Layers',
       container: layerListContainer
@@ -70,6 +75,8 @@ export function interactions({
         if (viewToggle.state == '2D') {
           viewToggle.toggle();
         }
+      } else {
+        editor?.viewModel?.cancelWorkflow();
       }
       widgetPanel.collapsed =
         widgetList.filter(w => {
@@ -88,4 +95,12 @@ export function interactions({
 
   rObserver.observe(widgetPanel);
   return rObserver;
+}
+
+export function openEditor() {
+  for (const action of actions) {
+    if ((action as any).text === 'Edit' && (editor.container as HTMLElement).classList.contains('hidden')) {
+      (action as HTMLElement).click();
+    }
+  }
 }
