@@ -6,6 +6,7 @@ import { subclass, declared, property } from 'esri/core/accessorSupport/decorato
 import Widget from 'esri/widgets/Widget';
 import { tsx, renderable } from 'esri/widgets/support/widget';
 import Basemap from 'esri/Basemap';
+import Extent from 'esri/geometry/Extent';
 import ArcGISSearch from 'esri/widgets/Search';
 import LayerSearchSource from 'esri/widgets/Search/LayerSearchSource';
 import { wTSLayer } from '../data/layers';
@@ -33,6 +34,21 @@ class Search extends declared(ArcGISSearch) {
     //   this.mapView = params?.initView as esri.MapView;
     // }
     this.addWWTSLayer();
+    this.allSources.on('after-add', s => {
+      if (s.item.name === 'ArcGIS World Geocoding Service') {
+        s.item.filter = {
+          geometry: new Extent({
+            xmin: -1.2446771509102838e7,
+            ymin: 5538979.1157324435,
+            xmax: -1.2332398764615571e7,
+            ymax: 5811320.651543414,
+            spatialReference: {
+              wkid: 102100
+            }
+          })
+        };
+      }
+    });
     this.on('select-result', function(event) {
       this.view.goTo({ zoom: 18 });
     });
