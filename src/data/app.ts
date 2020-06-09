@@ -7,7 +7,7 @@ import { getGWICPopup } from '../popup';
 import { gwMLayer, wTSLayer, notesLayer, walkDownLayers } from './layers';
 import esri = __esri;
 
-const version = '1.2.5';
+const version = '1.2.6';
 document.getElementById('version').innerText = 'v:' + version;
 
 export const display = '2D';
