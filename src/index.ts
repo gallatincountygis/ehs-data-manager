@@ -67,7 +67,7 @@ initView
 for (const key in viewConfig) {
   viewConfig[key].when().then(() => {
     viewConfig[key].popup.watch('visible', () => {
-      if (editor.arcGISEditor?.viewModel.state === 'editing-existing-feature') {
+      if (editor.arcGISEditor?.viewModel?.state === 'editing-existing-feature') {
         viewConfig[key].popup.close();
       }
     });

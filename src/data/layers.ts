@@ -126,14 +126,14 @@ notesLayer.when(() => {
         editorType: 'text-area'
       };
     }) as esri.FieldConfig[];
-  editor?.arcGISEditor?.layerInfos.push({
+  editor?.layerInfos.push({
     layer: notesLayer,
     fieldConfig: notesLayerFieldConfig
   });
 });
 
 function addLayerInfos(layer: esri.FeatureLayer, fieldConfig: esri.FieldConfig[]) {
-  editor?.arcGISEditor?.layerInfos.push({
+  editor?.layerInfos.push({
     layer,
     fieldConfig
   });

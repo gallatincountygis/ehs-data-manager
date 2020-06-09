@@ -95,7 +95,7 @@ class ViewToggle extends declared(Widget) {
     for (const key in this.widgets) {
       if (this.widgets[key].viewToggle) {
         this.widgets[key].viewToggle?.(toView);
-      } else if (key == 'editor') {
+      } else if (['editor', 'legend'].indexOf(key) >= 0) {
         continue;
       } else {
         this.widgets[key].view = toView;
