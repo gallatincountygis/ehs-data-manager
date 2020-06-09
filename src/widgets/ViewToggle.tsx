@@ -7,6 +7,7 @@ import Measure from './Measure';
 import Coordinates from './Coordinates';
 import BasemapGallery from './BasemapGallery';
 import Search from './Search';
+import Editor from './Editor';
 import Ground from 'esri/Ground';
 import { elevationLayer } from '../data/app';
 import watchUtils from 'esri/core/watchUtils';
@@ -22,7 +23,7 @@ interface ViewToggleParameters {
     measure: Measure;
     coordinates: Coordinates;
     basemapGallery: BasemapGallery;
-    editor: esri.Editor;
+    editor: Editor;
     search: Search;
   };
 }
@@ -44,7 +45,7 @@ class ViewToggle extends declared(Widget) {
     legend?: esri.Legend;
     measure?: Measure;
     basemapGallery?: esri.BasemapGallery;
-    editor?: esri.Editor;
+    editor?: Editor;
     search?: esri.Search;
   };
 

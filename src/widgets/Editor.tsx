@@ -3,36 +3,55 @@
 
 import { subclass, declared, property } from 'esri/core/accessorSupport/decorators';
 //import { renderable } from 'esri/widgets/support/widget';
-import '@esri/calcite-components';
+//import '@esri/calcite-components';
+import Widget from 'esri/widgets/Widget';
 import ArcGISEditor from 'esri/widgets/Editor';
 import * as watchUtils from 'esri/core/watchUtils';
 import esri = __esri;
+//import { renderable } from 'esri/widgets/support/widget';
 
 interface EditorParams {
   view: esri.SceneView | esri.MapView;
-  layerInfos: [];
+  layerInfos: esri.LayerInfo[];
   container: HTMLDivElement;
 }
 
 @subclass('esri.widgets.Editor')
-class Editor extends declared(ArcGISEditor) {
+class Editor extends declared(Widget) {
   @property()
   container: HTMLDivElement;
+
+  arcGISEditor: ArcGISEditor;
+
+  @property()
+  layerInfos: esri.LayerInfo[];
+
+  @property()
+  view: esri.MapView;
+
   constructor(params?: EditorParams) {
     super();
+    //this.makeArcGISWidget();
     //this.container = params.container;
     //this.editor = new ArcGISEditor(params);
-    this.fireReady();
-    watchUtils.watch(this.viewModel, 'state', this.onAwaitingFeature);
+    //this.fireReady();
+  }
+  makeArcGISWidget() {
+    this.arcGISEditor = new ArcGISEditor({
+      view: this.view,
+      layerInfos: this.layerInfos,
+      container: this.container
+    });
+    watchUtils.watch(this.arcGISEditor?.viewModel, 'state', this.onAwaitingFeature);
   }
   fireReady() {
     this.emit('ready', this);
   }
-  viewToggle(toView: esri.SceneView | esri.MapView) {
-    this.view = toView.hasOwnProperty('camera') ? null : (toView as esri.MapView);
-    //console.log('editing');
-    //console.log(this.layerInfos);
-  }
+  // viewToggle(toView: esri.SceneView | esri.MapView) {
+  //   //this.view = toView.hasOwnProperty('camera') ? null : (toView as esri.MapView);
+  //   //console.log('editing');
+  //   //console.log(this.layerInfos);
+  // }
   onAwaitingFeature(state: string) {
     if (['awaiting-feature-to-update', 'awaiting-feature-to-create'].indexOf(state) >= 0) {
       this.view?.popup?.close();

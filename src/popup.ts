@@ -51,9 +51,9 @@ export async function getGWICPopup({ graphic }: esri.Feature) {
 
 export function editThis(view: esri.MapView | esri.SceneView) {
   // If the EditorViewModel's activeWorkflow is null, make the popup not visible
-  if (!editor.viewModel.activeWorkflow) {
+  if (!editor.arcGISEditor?.viewModel.activeWorkflow) {
     view.popup.visible = false;
-    editor.startUpdateWorkflowAtFeatureEdit(view.popup.selectedFeature);
+    editor.arcGISEditor?.startUpdateWorkflowAtFeatureEdit(view.popup.selectedFeature);
     setTimeout(openEditor, 100);
   }
 }

@@ -15,7 +15,7 @@ import { InteractionParameters } from './interactions';
 
 import esri = __esri;
 
-export let editor: esri.Editor;
+export let editor: Editor;
 export let coordinates: Coordinates;
 
 export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView): InteractionParameters {

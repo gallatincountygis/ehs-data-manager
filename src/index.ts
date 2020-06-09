@@ -67,7 +67,7 @@ initView
 for (const key in viewConfig) {
   viewConfig[key].when().then(() => {
     viewConfig[key].popup.watch('visible', () => {
-      if (editor.viewModel.state === 'editing-existing-feature') {
+      if (editor.arcGISEditor?.viewModel.state === 'editing-existing-feature') {
         viewConfig[key].popup.close();
       }
     });
@@ -84,7 +84,7 @@ for (const key in viewConfig) {
     });
   });
   viewConfig[key].on('click', function(event: esri.MapViewClickEvent) {
-    if (!editor?.viewModel?.activeWorkflow) {
+    if (!editor?.arcGISEditor?.viewModel?.activeWorkflow) {
       viewConfig[key].hitTest(event).then(function(response: esri.HitTestResult) {
         drawRegulatoryBuffer(response, viewConfig[key]);
       });

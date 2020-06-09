@@ -1,6 +1,7 @@
 import ResizeObserver from 'resize-observer-polyfill';
 import Measure from './widgets/Measure';
 import BasemapGallery from './widgets/BasemapGallery';
+import Editor from './widgets/Editor';
 import Coordinates from './widgets/Coordinates';
 import { editor } from './widgets';
 import esri = __esri;
@@ -12,7 +13,7 @@ export interface InteractionParameters {
   measure: Measure;
   coordinates: Coordinates;
   basemapGallery: BasemapGallery;
-  editor: esri.Editor;
+  editor: Editor;
   viewToggle: ViewToggle;
   widgetPanel: any;
   sceneView: esri.SceneView;
@@ -90,7 +91,7 @@ export function interactions({
           viewToggle.toggle();
         }
       } else {
-        editor?.activeWorkflow && editor?.viewModel?.cancelWorkflow();
+        editor?.arcGISEditor?.activeWorkflow && editor?.arcGISEditor?.viewModel?.cancelWorkflow();
       }
       widgetPanel.collapsed =
         widgetList.filter(w => {
