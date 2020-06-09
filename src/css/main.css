@@ -54,3 +54,11 @@ body {
 #widget-editor textarea {
   min-height:150px;
 }
+
+.point-list {
+  padding-left: 20px;
+}
+
+.point-list li {
+  padding-bottom: 5px;
+}

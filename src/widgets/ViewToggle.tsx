@@ -4,6 +4,7 @@ import { subclass, declared, property } from 'esri/core/accessorSupport/decorato
 import Widget from 'esri/widgets/Widget';
 import { tsx, renderable } from 'esri/widgets/support/widget';
 import Measure from './Measure';
+import Coordinates from './Coordinates';
 import BasemapGallery from './BasemapGallery';
 import Search from './Search';
 import Ground from 'esri/Ground';
@@ -19,6 +20,7 @@ interface ViewToggleParameters {
     layerList: esri.LayerList;
     legend: esri.Legend;
     measure: Measure;
+    coordinates: Coordinates;
     basemapGallery: BasemapGallery;
     editor: esri.Editor;
     search: Search;

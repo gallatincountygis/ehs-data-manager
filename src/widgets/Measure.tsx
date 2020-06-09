@@ -80,7 +80,7 @@ class Measure extends declared(Measurement) {
       this.renderNow();
       if (this.activeTool == 'direct-line') {
         const section = (this?.container as HTMLElement).querySelectorAll('section')[1];
-        this.gradientNode = section?.lastElementChild?.cloneNode(true);
+        this.gradientNode = section?.lastElementChild?.cloneNode(true) as HTMLElement;
         if (this?.gradientNode?.firstElementChild && this?.gradientNode?.lastElementChild) {
           (this.gradientNode.firstElementChild as HTMLSpanElement).innerText = 'Hydraulic Gradient';
           const hydraulicGradient = (
@@ -112,9 +112,9 @@ class Measure extends declared(Measurement) {
     }
     const resultsContainer = (this?.container as HTMLElement).querySelectorAll('section')[1];
 
-    this.bearingNode = resultsContainer.firstElementChild.cloneNode(true);
-    this.bearingNode.firstElementChild.innerText = 'Bearing';
-    this.bearingNode.lastElementChild.innerText = this.computeAngle(path);
+    this.bearingNode = resultsContainer.firstElementChild.cloneNode(true) as HTMLElement;
+    (this.bearingNode.firstElementChild as HTMLElement).innerText = 'Bearing';
+    (this.bearingNode.lastElementChild as HTMLElement).innerText = this.computeAngle(path);
     resultsContainer.appendChild(this.bearingNode);
   }
 

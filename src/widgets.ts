@@ -9,12 +9,14 @@ import BasemapGallery from './widgets/BasemapGallery';
 import ViewToggle from './widgets/ViewToggle';
 import Editor from './widgets/Editor';
 import Search from './widgets/Search';
+import Coordinates from './widgets/Coordinates';
 import { display } from './data/app';
 import { InteractionParameters } from './interactions';
 
 import esri = __esri;
 
 export let editor: esri.Editor;
+export let coordinates: Coordinates;
 
 export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView): InteractionParameters {
   let initView;
@@ -46,6 +48,12 @@ export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView): I
     layerInfos: [],
     container: document.getElementById('widget-editor') as HTMLDivElement
   });
+  const coordinatesContainer = document.getElementById('widget-coordinates');
+  console.log(coordinatesContainer);
+  coordinates = new Coordinates({
+    view: initView as esri.MapView,
+    container: coordinatesContainer
+  });
 
   const viewToggle = new ViewToggle({
     initView,
@@ -54,6 +62,7 @@ export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView): I
       layerList,
       legend,
       measure,
+      coordinates,
       basemapGallery,
       editor,
       search
@@ -91,6 +100,7 @@ export function initWidgets(sceneView: esri.SceneView, mapView: esri.MapView): I
     layerListContainer,
     legendContainer,
     measure,
+    coordinates,
     basemapGallery,
     editor,
     viewToggle,

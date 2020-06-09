@@ -1,6 +1,7 @@
 import ResizeObserver from 'resize-observer-polyfill';
 import Measure from './widgets/Measure';
 import BasemapGallery from './widgets/BasemapGallery';
+import Coordinates from './widgets/Coordinates';
 import { editor } from './widgets';
 import esri = __esri;
 import ViewToggle from './widgets/ViewToggle';
@@ -9,6 +10,7 @@ export interface InteractionParameters {
   layerListContainer: HTMLElement;
   legendContainer: HTMLElement;
   measure: Measure;
+  coordinates: Coordinates;
   basemapGallery: BasemapGallery;
   editor: esri.Editor;
   viewToggle: ViewToggle;
@@ -29,6 +31,7 @@ export function interactions({
   layerListContainer,
   legendContainer,
   measure,
+  coordinates,
   basemapGallery,
   editor,
   viewToggle,
@@ -52,6 +55,10 @@ export function interactions({
       container: measure.container as HTMLElement
     },
     {
+      label: 'Coordinates',
+      container: coordinates.container as HTMLElement
+    },
+    {
       label: 'Basemap',
       container: basemapGallery.container as HTMLElement
     },
@@ -63,14 +70,21 @@ export function interactions({
   for (const action of actions) {
     action.addEventListener('click', () => {
       const actionText = (action as any).text;
+      console.log(actionText);
       widgetList.forEach(w => {
-        actionText == w.label ? w.container.classList.toggle('hidden') : w.container.classList.add('hidden');
+        actionText == w.label ? w.container?.classList.toggle('hidden') : w.container?.classList.add('hidden');
       });
       if (actionText != 'Measure') {
         measure.disable();
       } else {
         measure.enable();
       }
+      if (coordinates.activated === true && actionText === 'Coordinates') {
+        coordinates.activated = false;
+      } else {
+        coordinates.activated = actionText === 'Coordinates';
+      }
+
       if (actionText == 'Edit') {
         if (viewToggle.state == '2D') {
           viewToggle.toggle();
