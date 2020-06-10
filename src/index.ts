@@ -33,7 +33,7 @@ const info = new OAuthInfo({
 });
 
 IdentityManager.registerOAuthInfos([info]);
-IdentityManager.checkSignInStatus(info.portalUrl + '/sharing');
+//IdentityManager.checkSignInStatus(info.portalUrl + '/sharing');
 
 const viewpoint = new Viewpoint({
   scale: 288895,
