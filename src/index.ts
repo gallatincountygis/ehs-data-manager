@@ -17,9 +17,23 @@ import { drawRegulatoryBuffer } from './regulatory-buffer';
 import esri = __esri;
 import { Point } from 'esri/geometry';
 import { getPermit } from './tyler';
+import IdentityManager from 'esri/identity/IdentityManager';
+import OAuthInfo from 'esri/identity/OAuthInfo';
 /**
  * Initialize application
  */
+const info = new OAuthInfo({
+  appId: 'P9589LByKLuOWflM',
+  // Uncomment the next line and update if using your own portal
+  // portalUrl: "https://<host>:<port>/arcgis",
+  // Uncomment the next line to prevent the user's signed in state from being shared
+  // with other apps on the same domain with the same authNamespace value.
+  //authNamespace: "portal_oauth_inline",
+  popup: false
+});
+
+IdentityManager.registerOAuthInfos([info]);
+IdentityManager.checkSignInStatus(info.portalUrl + '/sharing');
 
 const viewpoint = new Viewpoint({
   scale: 288895,
