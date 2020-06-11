@@ -98,10 +98,9 @@ for (const key in viewConfig) {
     });
   });
   watchUtils.watch(viewConfig[key].popup, ['selectedFeature', 'visible'], () => {
-    if (!viewConfig[key].visible) {
+    if (!viewConfig[key].popup.visible) {
       clearRegulatoryBuffer(viewConfig[key]);
-    }
-    if (
+    } else if (
       !editor?.arcGISEditor?.viewModel?.activeWorkflow &&
       viewConfig[key].popup?.selectedFeature?.layer === wTSLayer
     ) {

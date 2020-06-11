@@ -118,9 +118,9 @@ class Coordinates extends declared(Widget) {
         const geom = g.geometry as esri.Point;
         rows.push(
           <li key={this.graphicsList.length}>
-            <span>longitude: {Number(geom.longitude).toFixed(5)}</span>
+            <span>longitude: {Number(geom.longitude).toFixed(6)}</span>
             <br></br>
-            <span>latitude: {Number(geom.latitude).toFixed(5)}</span>
+            <span>latitude: {Number(geom.latitude).toFixed(6)}</span>
           </li>
         );
       });
@@ -130,9 +130,9 @@ class Coordinates extends declared(Widget) {
         <p>
           <span>Cursor:</span>
           <br></br>
-          <span>longitude: {Number(longitude).toFixed(5)}</span>
+          <span>longitude: {Number(longitude).toFixed(6)}</span>
           <br></br>
-          <span>latitude: {Number(latitude).toFixed(5)}</span>
+          <span>latitude: {Number(latitude).toFixed(6)}</span>
         </p>
       </div>
     );
