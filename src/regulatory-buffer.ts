@@ -5,17 +5,14 @@ import esri = __esri;
 
 let graphic: Graphic;
 
-export function drawRegulatoryBuffer(response: esri.HitTestResult, view: esri.View) {
+export function drawRegulatoryBuffer(g: esri.Graphic, view: esri.View) {
   // check if a feature is returned from the hurricanesLayer
   // do something with the result graphic
   if (graphic) {
     view.graphics.remove(graphic);
   }
-  const hitgraphic = response.results.filter(function(result) {
-    return result.graphic.layer === wTSLayer;
-  })[0]?.graphic;
-  if (hitgraphic) {
-    const septicBuffer = geometryEngine.geodesicBuffer(hitgraphic.geometry, 200, 'feet') as esri.Geometry;
+  if (g) {
+    const septicBuffer = geometryEngine.geodesicBuffer(g.geometry, 200, 'feet') as esri.Geometry;
     const bufferGraphic = new Graphic({
       geometry: septicBuffer,
       symbol: {
@@ -27,4 +24,8 @@ export function drawRegulatoryBuffer(response: esri.HitTestResult, view: esri.Vi
     graphic = bufferGraphic;
     view.graphics.add(bufferGraphic);
   }
+}
+
+export function clearRegulatoryBuffer(view: esri.MapView | esri.SceneView) {
+  view.graphics.remove(graphic);
 }

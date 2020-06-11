@@ -13,7 +13,7 @@ import { initWidgets, editor } from './widgets';
 import { popupSort, editThis } from './popup';
 // interactions
 import { interactions } from './interactions';
-import { drawRegulatoryBuffer } from './regulatory-buffer';
+import { drawRegulatoryBuffer, clearRegulatoryBuffer } from './regulatory-buffer';
 import esri = __esri;
 import { Point } from 'esri/geometry';
 import { getPermit } from './tyler';
@@ -97,11 +97,17 @@ for (const key in viewConfig) {
       }
     });
   });
-  viewConfig[key].on('click', function(event: esri.MapViewClickEvent) {
-    if (!editor?.arcGISEditor?.viewModel?.activeWorkflow) {
-      viewConfig[key].hitTest(event).then(function(response: esri.HitTestResult) {
-        drawRegulatoryBuffer(response, viewConfig[key]);
-      });
+  watchUtils.watch(viewConfig[key].popup, ['selectedFeature', 'visible'], () => {
+    if (!viewConfig[key].visible) {
+      clearRegulatoryBuffer(viewConfig[key]);
+    }
+    if (
+      !editor?.arcGISEditor?.viewModel?.activeWorkflow &&
+      viewConfig[key].popup?.selectedFeature?.layer === wTSLayer
+    ) {
+      drawRegulatoryBuffer(viewConfig[key].popup?.selectedFeature, viewConfig[key]);
+    } else {
+      clearRegulatoryBuffer(viewConfig[key]);
     }
   });
 }
