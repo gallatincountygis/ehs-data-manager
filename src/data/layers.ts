@@ -1,4 +1,5 @@
 import FeatureLayer from 'esri/layers/FeatureLayer';
+import AttachmentsContent from 'esri/popup/content/AttachmentsContent';
 import { addPopupsToMapImageLayer } from '../popup';
 import { editor } from '../widgets';
 import esri = __esri;
@@ -30,7 +31,10 @@ export const wTSLayer = new FeatureLayer({
       {
         type: 'fields',
         fieldInfos: []
-      }
+      },
+      new AttachmentsContent({
+        displayType: 'preview'
+      })
     ]
   }
 });
