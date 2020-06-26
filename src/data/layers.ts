@@ -33,7 +33,7 @@ export const wTSLayer = new FeatureLayer({
         fieldInfos: []
       },
       new AttachmentsContent({
-        displayType: 'preview'
+        displayType: 'list'
       })
     ]
   }
@@ -133,6 +133,34 @@ notesLayer.when(() => {
   editor?.layerInfos.push({
     layer: notesLayer,
     fieldConfig: notesLayerFieldConfig
+  });
+});
+
+export const areasOfConcernLayer = new FeatureLayer({
+  portalItem: {
+    id: 'e227951905de4252af848e182af8e39a'
+  }
+});
+
+areasOfConcernLayer.when(() => {
+  const areasOfConcernFieldConfig = areasOfConcernLayer.fields
+    .filter(f => {
+      return ['PROPDESC', 'NOTES'].indexOf(f.name) >= 0;
+    })
+    .map((f: esri.Field) => {
+      return {
+        description: f.description,
+        domain: f.domain,
+        editable: f.editable,
+        name: f.name,
+        maxLength: f.length,
+        label: f.alias,
+        editorType: 'text-area'
+      };
+    }) as esri.FieldConfig[];
+  editor?.layerInfos.push({
+    layer: areasOfConcernLayer,
+    fieldConfig: areasOfConcernFieldConfig
   });
 });
 

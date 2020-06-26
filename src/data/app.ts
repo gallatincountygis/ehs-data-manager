@@ -4,10 +4,10 @@ import Map from 'esri/Map';
 import GroupLayer from 'esri/layers/GroupLayer';
 import ElevationLayer from 'esri/layers/ElevationLayer';
 import { getGWICPopup } from '../popup';
-import { gwMLayer, wTSLayer, notesLayer, walkDownLayers } from './layers';
+import { gwMLayer, wTSLayer, notesLayer, areasOfConcernLayer, walkDownLayers } from './layers';
 import esri = __esri;
 
-const version = '1.3.2';
+const version = '1.3.3';
 document.getElementById('version').innerText = 'v:' + version;
 
 export const display = '2D';
@@ -180,6 +180,7 @@ export const map = new Map({
   layers: [
     parcelsLayer,
     floodHazardZonesLayer,
+    areasOfConcernLayer,
     publicSystemsGroupLayer,
     miscEHSLayer,
     deqGroupLayer,
