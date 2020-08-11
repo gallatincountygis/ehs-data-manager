@@ -23,7 +23,7 @@ export default {
     sourcemap: SOURCEMAP
   },
   plugins: [
-    del({ targets: OUTPUT }),
+    //del({ targets: OUTPUT }),
     eslint({
       fix: true,
       exclude: ['node_modules/**', 'src/**/*.css']
