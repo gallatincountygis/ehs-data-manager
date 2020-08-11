@@ -4,10 +4,10 @@ import Map from 'esri/Map';
 import GroupLayer from 'esri/layers/GroupLayer';
 import ElevationLayer from 'esri/layers/ElevationLayer';
 import { getGWICPopup } from '../popup';
-import { gwMLayer, wTSLayer, notesLayer, areasOfConcernLayer, walkDownLayers } from './layers';
+import { gwMLayer, wTSLayer, waterSupplySystemLayer, notesLayer, areasOfConcernLayer, walkDownLayers } from './layers';
 import esri = __esri;
 
-const version = '1.3.3';
+const version = '1.3.4';
 document.getElementById('version').innerText = 'v:' + version;
 
 export const display = '2D';
@@ -43,7 +43,7 @@ const miscEHSLayer = new MapImageLayer({
 
 miscEHSLayer.when().then(() => {
   miscEHSLayer.sublayers = miscEHSLayer.sublayers.filter(s => {
-    return s.id >= 2;
+    return s.id >= 3;
   });
 });
 
@@ -186,6 +186,7 @@ export const map = new Map({
     deqGroupLayer,
     gwicLayer,
     notesLayer,
+    waterSupplySystemLayer,
     gwMLayer,
     wTSLayer,
     addressGroupLayer

@@ -108,6 +108,35 @@ gwMLayer.when(() => {
   addLayerInfos(gwMLayer, gwMFieldConfig);
 });
 
+export const waterSupplySystemLayer = new FeatureLayer({
+  portalItem: {
+    id: '940b0c5b4fa64f44ab23f3bf19396e75'
+  },
+  outFields: ['*'],
+  title: 'Water Supply Systems',
+  id: 'wss',
+  displayField: 'GW_MONITOR',
+  opacity: 0.8
+});
+
+waterSupplySystemLayer.when(() => {
+  const wSSFieldConfig = waterSupplySystemLayer.fields
+    .filter((f: esri.Field) => {
+      return f.name !== 'FID';
+    })
+    .map((f: esri.Field) => {
+      const fc = {
+        description: f.description,
+        domain: f.domain,
+        editable: f.editable,
+        name: f.name,
+        maxLength: f.length,
+        label: f.alias
+      } as esri.FieldConfig;
+      return fc;
+    }) as esri.FieldConfig[];
+  addLayerInfos(waterSupplySystemLayer, wSSFieldConfig);
+});
 export const notesLayer = new FeatureLayer({
   portalItem: {
     id: '9d8ecc343fad4ffdb5c094647f78690e'
