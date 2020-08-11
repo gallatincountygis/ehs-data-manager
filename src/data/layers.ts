@@ -115,8 +115,7 @@ export const waterSupplySystemLayer = new FeatureLayer({
   outFields: ['*'],
   title: 'Water Supply Systems',
   id: 'wss',
-  displayField: 'GW_MONITOR',
-  opacity: 0.8
+  displayField: 'GW_MONITOR'
 });
 
 waterSupplySystemLayer.when(() => {
