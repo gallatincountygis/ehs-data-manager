@@ -4,10 +4,21 @@ import Map from 'esri/Map';
 import GroupLayer from 'esri/layers/GroupLayer';
 import ElevationLayer from 'esri/layers/ElevationLayer';
 import { getGWICPopup } from '../popup';
-import { gwMLayer, wTSLayer, waterSupplySystemLayer, notesLayer, areasOfConcernLayer, walkDownLayers } from './layers';
+import {
+  gwMLayer,
+  wTSLayer,
+  waterSupplySystemLayer,
+  notesLayer,
+  areasOfConcernLayer,
+  walkDownLayers,
+  artificialDrains,
+  hydraulicConductivity,
+  hydraulicGradient,
+  septageLandApplicationSites
+} from './layers';
 import esri = __esri;
 
-const version = '1.3.4';
+const version = '1.3.5';
 document.getElementById('version').innerText = 'v:' + version;
 
 export const display = '2D';
@@ -184,6 +195,10 @@ export const map = new Map({
     publicSystemsGroupLayer,
     miscEHSLayer,
     deqGroupLayer,
+    artificialDrains,
+    hydraulicGradient,
+    hydraulicConductivity,
+    septageLandApplicationSites,
     gwicLayer,
     notesLayer,
     waterSupplySystemLayer,

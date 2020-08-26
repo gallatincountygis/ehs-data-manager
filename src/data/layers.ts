@@ -192,6 +192,128 @@ areasOfConcernLayer.when(() => {
   });
 });
 
+export const septageLandApplicationSites = new FeatureLayer({
+  portalItem: {
+    id: '11e9b60f11df40e5bd00841d001be3ab'
+  },
+  id: 'septageSites',
+  visible: false
+});
+
+septageLandApplicationSites.when(() => {
+  const septageLandApplicationSitesFieldConfig = septageLandApplicationSites.fields
+    .filter(f => {
+      return f.name !== 'OBJECTID' && !f.name.startsWith('Shape_');
+    })
+    .map((f: esri.Field) => {
+      return {
+        description: f.description,
+        domain: f.domain,
+        editable: f.editable,
+        name: f.name,
+        maxLength: f.length,
+        label: f.alias
+      };
+    }) as esri.FieldConfig[];
+  editor?.layerInfos.push({
+    layer: septageLandApplicationSites,
+    fieldConfig: septageLandApplicationSitesFieldConfig
+  });
+});
+
+export const hydraulicGradient = new FeatureLayer({
+  portalItem: {
+    id: '74b93b8d191d4895b1e79a01a8fa46a4'
+  },
+  id: 'hydraulicGradient',
+  visible: false
+});
+
+hydraulicGradient.when(() => {
+  const hydraulicGradientFieldConfig = hydraulicGradient.fields
+    .filter(f => {
+      return f.name !== 'OBJECTID';
+    })
+    .map((f: esri.Field) => {
+      const editorType = f.name === 'NOTES' ? 'text-area' : 'text-box';
+      return {
+        description: f.description,
+        domain: f.domain,
+        editable: f.editable,
+        name: f.name,
+        maxLength: f.length,
+        label: f.alias,
+        editorType
+      };
+    }) as esri.FieldConfig[];
+  editor?.layerInfos.push({
+    layer: hydraulicGradient,
+    fieldConfig: hydraulicGradientFieldConfig
+  });
+});
+
+export const hydraulicConductivity = new FeatureLayer({
+  portalItem: {
+    id: '7be2de4e0590402e9e53c522e25e67dc'
+  },
+  id: 'hydraulicConductivity',
+  visible: false
+});
+
+hydraulicConductivity.when(() => {
+  const hydraulicConductivityFieldConfig = hydraulicConductivity.fields
+    .filter(f => {
+      return f.name !== 'OBJECTID';
+    })
+    .map((f: esri.Field) => {
+      const editorType = f.name === 'NOTES' ? 'text-area' : 'text-box';
+      return {
+        description: f.description,
+        domain: f.domain,
+        editable: f.editable,
+        name: f.name,
+        maxLength: f.length,
+        label: f.alias,
+        editorType
+      };
+    }) as esri.FieldConfig[];
+  editor?.layerInfos.push({
+    layer: hydraulicConductivity,
+    fieldConfig: hydraulicConductivityFieldConfig
+  });
+});
+
+export const artificialDrains = new FeatureLayer({
+  portalItem: {
+    id: '7c8d12ed87244151b0501af48ae4da4f'
+  },
+  id: 'artificialDrain',
+  visible: false
+});
+
+artificialDrains.when(() => {
+  const artificialDrainsFieldConfig = artificialDrains.fields
+    .filter(f => {
+      return f.name !== 'OBJECTID';
+    })
+    .map((f: esri.Field) => {
+      const editorType = f.name === 'NOTES' ? 'text-area' : 'text-box';
+      return {
+        description: f.description,
+        domain: f.domain,
+        editable: f.editable,
+        name: f.name,
+        maxLength: f.length,
+        label: f.alias,
+        editorType
+      };
+    }) as esri.FieldConfig[];
+  editor?.layerInfos.push({
+    layer: artificialDrains,
+    fieldConfig: artificialDrainsFieldConfig
+  });
+});
+
 function addLayerInfos(layer: esri.FeatureLayer, fieldConfig: esri.FieldConfig[]) {
   editor?.layerInfos.push({
     layer,
