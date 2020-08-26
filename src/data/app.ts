@@ -18,7 +18,7 @@ import {
 } from './layers';
 import esri = __esri;
 
-const version = '1.3.5';
+const version = '1.3.6';
 document.getElementById('version').innerText = 'v:' + version;
 
 export const display = '2D';
@@ -54,7 +54,7 @@ const miscEHSLayer = new MapImageLayer({
 
 miscEHSLayer.when().then(() => {
   miscEHSLayer.sublayers = miscEHSLayer.sublayers.filter(s => {
-    return s.id >= 3;
+    return s.id >= 5 && s.id != 11;
   });
 });
 
