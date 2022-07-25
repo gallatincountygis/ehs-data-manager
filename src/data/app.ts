@@ -40,6 +40,68 @@ const addressLayer = new MapImageLayer({
   listMode: 'hide'
 });
 
+let symbol = {
+  type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
+  style: "circle",
+  color: "black",
+  size: "6px",  // pixels
+};
+
+let symbol1 = {
+  type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
+  style: "circle",
+  color: "red",
+  size: "6px",  // pixels
+};
+
+let symbol2 = {
+  type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
+  style: "circle",
+  color: "green",
+  size: "6px",  // pixels
+};
+
+let symbol3 = {
+  type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
+  style: "circle",
+  color: "yellow",
+  size: "6px",  // pixels
+};
+
+let symbol4 = {
+  type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
+  style: "circle",
+  color: "blue",
+  size: "6px",  // pixels
+};
+
+let cosaRenderer = {
+  type: "unique-value",
+  field: "COSAstatus",
+  defaultSymbol: symbol,
+  uniqueValueInfos: [{
+      value: "Completed - succeeded",
+      symbol: symbol2
+  },{
+      value: "Active",
+      symbol: symbol4
+  }, {
+      value: "Pending",
+      symbol: symbol3
+  }, {
+      value: "Completed - failed",
+      symbol: symbol1
+  }]
+};
+
+const cosaReviewLayer = new FeatureLayer({
+  url: 'https://services8.arcgis.com/VY7LGmlsl8pbHxE5/arcgis/rest/services/COSA_review_status/FeatureServer',
+  outFields: ['*'],
+  title: 'COSA Review Status',
+  renderer: cosaRenderer
+  }
+});
+
 const addressGroupLayer = new GroupLayer({
   layers: [addressLayer, recentRecentAddressLayer],
   title: 'Addresses',
