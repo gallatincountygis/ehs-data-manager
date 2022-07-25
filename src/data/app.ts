@@ -99,7 +99,6 @@ const cosaReviewLayer = new FeatureLayer({
   outFields: ['*'],
   title: 'COSA Review Status',
   renderer: cosaRenderer
-  }
 });
 
 const addressGroupLayer = new GroupLayer({
