@@ -283,6 +283,12 @@ hydraulicConductivity.when(() => {
   });
 });
 
+export const cosaReviewLayer = new FeatureLayer({
+  url: 'https://services8.arcgis.com/VY7LGmlsl8pbHxE5/arcgis/rest/services/COSA_review_status/FeatureServer',
+  outFields: ['*'],
+  title: 'COSA Review Status'
+})
+
 export const artificialDrains = new FeatureLayer({
   portalItem: {
     id: '7c8d12ed87244151b0501af48ae4da4f'
