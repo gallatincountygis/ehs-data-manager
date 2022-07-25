@@ -9,6 +9,7 @@ import {
   wTSLayer,
   waterSupplySystemLayer,
   notesLayer,
+  cosaReviewLayer,
   areasOfConcernLayer,
   walkDownLayers,
   artificialDrains,
@@ -18,7 +19,7 @@ import {
 } from './layers';
 import esri = __esri;
 
-const version = '1.3.6';
+const version = '1.3.7';
 document.getElementById('version').innerText = 'v:' + version;
 
 export const display = '2D';
@@ -200,6 +201,7 @@ export const map = new Map({
     hydraulicConductivity,
     septageLandApplicationSites,
     gwicLayer,
+    cosaReviewLayer,
     notesLayer,
     waterSupplySystemLayer,
     gwMLayer,
