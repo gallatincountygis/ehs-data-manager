@@ -41,57 +41,62 @@ const addressLayer = new MapImageLayer({
 });
 
 const symbol = {
-  type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
-  style: "circle",
-  color: "black",
-  size: "6px",  // pixels
+  type: 'simple-marker', // autocasts as new SimpleMarkerSymbol()
+  style: 'circle',
+  color: 'black',
+  size: '6px' // pixels
 };
 
 const symbol1 = {
-  type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
-  style: "circle",
-  color: "red",
-  size: "6px",  // pixels
+  type: 'simple-marker', // autocasts as new SimpleMarkerSymbol()
+  style: 'circle',
+  color: 'red',
+  size: '6px' // pixels
 };
 
 const symbol2 = {
-  type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
-  style: "circle",
-  color: "green",
-  size: "6px",  // pixels
+  type: 'simple-marker', // autocasts as new SimpleMarkerSymbol()
+  style: 'circle',
+  color: 'green',
+  size: '6px' // pixels
 };
 
 const symbol3 = {
-  type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
-  style: "circle",
-  color: "yellow",
-  size: "6px",  // pixels
+  type: 'simple-marker', // autocasts as new SimpleMarkerSymbol()
+  style: 'circle',
+  color: 'yellow',
+  size: '6px' // pixels
 };
 
 const symbol4 = {
-  type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
-  style: "circle",
-  color: "blue",
-  size: "6px",  // pixels
+  type: 'simple-marker', // autocasts as new SimpleMarkerSymbol()
+  style: 'circle',
+  color: 'blue',
+  size: '6px' // pixels
 };
 
 const cosaRenderer = {
-  type: "unique-value",
-  field: "COSAstatus",
+  type: 'unique-value',
+  field: 'COSAstatus',
   defaultSymbol: symbol,
-  uniqueValueInfos: [{
-      value: "Completed - succeeded",
+  uniqueValueInfos: [
+    {
+      value: 'Completed - succeeded',
       symbol: symbol2
-  },{
-      value: "Active",
+    },
+    {
+      value: 'Active',
       symbol: symbol4
-  }, {
-      value: "Pending",
+    },
+    {
+      value: 'Pending',
       symbol: symbol3
-  }, {
-      value: "Completed - failed",
+    },
+    {
+      value: 'Completed - failed',
       symbol: symbol1
-  }]
+    }
+  ]
 };
 
 const cosaReviewLayer = new FeatureLayer({
