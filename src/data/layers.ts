@@ -4,6 +4,81 @@ import { addPopupsToMapImageLayer } from '../popup';
 import { editor } from '../widgets';
 import esri = __esri;
 
+export const cosaLayer = new FeatureLayer({
+  portalItem: {
+    id: '5420c4a003e44fb28b1428b8581e3df9'
+  },
+  outFields: ['*'],
+  title: 'COSA Review',
+  id: 'cosa',
+  displayField: 'Rev_Status',
+  editingEnabled: true,
+  opacity: 0.5,
+  renderer: {
+    type: 'unique-value',
+    field: 'Rev_Status',
+    defaultSymbol: { type: 'simple-fill' },
+    uniqueValueInfos: [
+      {
+        value: 'Active',
+        symbol: {
+          type: 'simple-fill',
+          color: 'orange'
+        }
+      },
+      {
+        value: 'Inactive',
+        symbol: {
+          type: 'simple-fill',
+          color: 'yellow'
+        }
+      }
+    ]
+  } as esri.UniqueValueRendererProperties,
+  popupTemplate: {
+    title: 'EQ ID: {EQ_ID}',
+    actions: [
+      {
+        title: 'Edit feature',
+        id: 'edit-this',
+        className: 'esri-icon-edit'
+      }
+    ] as esri.ActionButton[],
+    content: [
+      {
+        type: 'fields',
+        fieldInfos: []
+      },
+      new AttachmentsContent({
+        displayType: 'list'
+      })
+    ]
+  }
+});
+
+cosaLayer.when(() => {
+  const cosaFieldConfig = cosaLayer.fields
+    .filter((f: esri.Field) => {
+      return f.name != 'OBJECTID' && f.name != 'Shape__Area' && f.name != 'Shape__Length';
+    })
+    .map((f: esri.Field) => {
+      cosaLayer.popupTemplate.content[0].fieldInfos.push({
+        fieldName: f.name,
+        label: f.alias
+      });
+      const fc = {
+        description: f.description,
+        domain: f.domain as esri.CodedValueDomain | esri.RangeDomain,
+        editable: f.editable,
+        name: f.name,
+        maxLength: f.length,
+        label: f.alias
+      } as esri.FieldConfig;
+      return fc;
+    }) as esri.FieldConfig[];
+  addLayerInfos(cosaLayer, cosaFieldConfig);
+});
+
 export const wTSLayer = new FeatureLayer({
   portalItem: {
     id: '49e1606446f34f93807b1fc437be53c9'

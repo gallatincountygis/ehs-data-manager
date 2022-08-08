@@ -6,6 +6,7 @@ import ElevationLayer from 'esri/layers/ElevationLayer';
 import { getGWICPopup } from '../popup';
 import {
   gwMLayer,
+  cosaLayer,
   wTSLayer,
   waterSupplySystemLayer,
   notesLayer,
@@ -258,6 +259,7 @@ export const map = new Map({
   },
   layers: [
     parcelsLayer,
+    cosaLayer,
     floodHazardZonesLayer,
     areasOfConcernLayer,
     publicSystemsGroupLayer,
@@ -268,7 +270,6 @@ export const map = new Map({
     hydraulicConductivity,
     septageLandApplicationSites,
     gwicLayer,
-    cosaReviewLayer,
     notesLayer,
     waterSupplySystemLayer,
     gwMLayer,
