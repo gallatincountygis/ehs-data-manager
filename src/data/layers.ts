@@ -13,11 +13,10 @@ export const cosaLayer = new FeatureLayer({
   id: 'cosa',
   displayField: 'Rev_Status',
   editingEnabled: true,
-  opacity: 0.5,
+  opacity: 0.65,
   renderer: {
     type: 'unique-value',
     field: 'Rev_Status',
-    defaultSymbol: { type: 'simple-fill' },
     uniqueValueInfos: [
       {
         value: 'Active',
@@ -30,7 +29,14 @@ export const cosaLayer = new FeatureLayer({
         value: 'Inactive',
         symbol: {
           type: 'simple-fill',
-          color: 'yellow'
+          color: 'gray'
+        }
+      },
+      {
+        value: 'Approved',
+        symbol: {
+          type: 'simple-fill',
+          color: 'green'
         }
       }
     ]
