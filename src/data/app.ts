@@ -10,8 +10,6 @@ import {
   wTSLayer,
   waterSupplySystemLayer,
   notesLayer,
-  cosaReviewLayer,
-  LEDLayer,
   areasOfConcernLayer,
   walkDownLayers,
   artificialDrains,
@@ -25,6 +23,38 @@ const version = '1.3.7';
 document.getElementById('version').innerText = 'v:' + version;
 
 export const display = '2D';
+
+const LEDLayer = new FeatureLayer({
+  portalItem: {
+    id: 'a840ac051ca0454d951cb7c25ab7110b'
+  },
+  outFields: ['*'],
+  title: 'Licensed Establishment Districts',
+  id: 'led',
+  displayField: 'LED_Name',
+  legendEnabled: true,
+  editingEnabled: true,
+  opacity: 0.5,
+  popupTemplate: {
+    title: 'District Name: {LED_Name}',
+    actions: [
+      {
+        title: 'Edit feature',
+        id: 'edit-this',
+        className: 'esri-icon-edit'
+      }
+    ] as esri.ActionButton[],
+    content: [
+      {
+        type: 'fields',
+        fieldInfos: []
+      },
+      new AttachmentsContent({
+        displayType: 'list'
+      })
+    ]
+  }
+});
 
 const recentRecentAddressLayer = new FeatureLayer({
   portalItem: {
@@ -76,38 +106,6 @@ const symbol4 = {
   color: 'blue',
   size: '6px' // pixels
 };
-
-const cosaRenderer = {
-  type: 'unique-value',
-  field: 'COSAstatus',
-  defaultSymbol: symbol,
-  uniqueValueInfos: [
-    {
-      value: 'Completed - succeeded',
-      symbol: symbol2
-    },
-    {
-      value: 'Active',
-      symbol: symbol4
-    },
-    {
-      value: 'Pending',
-      symbol: symbol3
-    },
-    {
-      value: 'Completed - failed',
-      symbol: symbol1
-    }
-  ]
-};
-
-const cosaReviewLayer = new FeatureLayer({
-  url: 'https://services8.arcgis.com/VY7LGmlsl8pbHxE5/arcgis/rest/services/COSA_review_status/FeatureServer',
-  outFields: ['*'],
-  title: 'COSA Review Status',
-  visible: true,
-  renderer: cosaRenderer
-});
 
 const addressGroupLayer = new GroupLayer({
   layers: [addressLayer, recentRecentAddressLayer],
