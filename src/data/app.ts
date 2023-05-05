@@ -11,6 +11,7 @@ import {
   waterSupplySystemLayer,
   notesLayer,
   cosaReviewLayer,
+  LEDLayer,
   areasOfConcernLayer,
   walkDownLayers,
   artificialDrains,
@@ -260,6 +261,7 @@ export const map = new Map({
   layers: [
     parcelsLayer,
     cosaLayer,
+    LEDLayer,
     floodHazardZonesLayer,
     areasOfConcernLayer,
     publicSystemsGroupLayer,
