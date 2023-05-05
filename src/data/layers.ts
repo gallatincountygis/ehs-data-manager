@@ -4,37 +4,6 @@ import { addPopupsToMapImageLayer } from '../popup';
 import { editor } from '../widgets';
 import esri = __esri;
 
-export const LEDLayer = new FeatureLayer({
-  portalItem: {
-    id: 'a840ac051ca0454d951cb7c25ab7110b'
-  },
-  outFields: ['*'],
-  title: 'Licensed Establishment Districts',
-  id: 'led',
-  displayField: 'LED_Name',
-  editingEnabled: true,
-  opacity: 0.5,
-  popupTemplate: {
-    title: 'District Name: {LED_Name}',
-    actions: [
-      {
-        title: 'Edit feature',
-        id: 'edit-this',
-        className: 'esri-icon-edit'
-      }
-    ] as esri.ActionButton[],
-    content: [
-      {
-        type: 'fields',
-        fieldInfos: []
-      },
-      new AttachmentsContent({
-        displayType: 'list'
-      })
-    ]
-  }
-});
-
 export const cosaLayer = new FeatureLayer({
   portalItem: {
     id: '5420c4a003e44fb28b1428b8581e3df9'
