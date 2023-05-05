@@ -27,13 +27,7 @@ export const display = '2D';
 const LEDLayer = new FeatureLayer({
   portalItem: {
     id: 'a840ac051ca0454d951cb7c25ab7110b'
-  },
-  outFields: ['*'],
-  title: 'Licensed Establishment Districts',
-  id: 'led',
-  displayField: 'LED_Name',
-  legendEnabled: true,
-  editingEnabled: true
+  }
 });
 
 const recentRecentAddressLayer = new FeatureLayer({
