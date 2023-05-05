@@ -33,27 +33,7 @@ const LEDLayer = new FeatureLayer({
   id: 'led',
   displayField: 'LED_Name',
   legendEnabled: true,
-  editingEnabled: true,
-  opacity: 0.5,
-  popupTemplate: {
-    title: 'District Name: {LED_Name}',
-    actions: [
-      {
-        title: 'Edit feature',
-        id: 'edit-this',
-        className: 'esri-icon-edit'
-      }
-    ] as esri.ActionButton[],
-    content: [
-      {
-        type: 'fields',
-        fieldInfos: []
-      },
-      new AttachmentsContent({
-        displayType: 'list'
-      })
-    ]
-  }
+  editingEnabled: true
 });
 
 const recentRecentAddressLayer = new FeatureLayer({
