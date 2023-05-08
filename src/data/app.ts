@@ -6,6 +6,7 @@ import ElevationLayer from 'esri/layers/ElevationLayer';
 import { getGWICPopup } from '../popup';
 import {
   gwMLayer,
+  LEDLayer,
   cosaLayer,
   wTSLayer,
   waterSupplySystemLayer,
@@ -24,12 +25,6 @@ document.getElementById('version').innerText = 'v:' + version;
 
 export const display = '2D';
 
-const LEDLayer = new FeatureLayer({
-  portalItem: {
-    id: 'a840ac051ca0454d951cb7c25ab7110b'
-  }
-});
-
 const recentRecentAddressLayer = new FeatureLayer({
   portalItem: {
     id: 'd88f46d2f52a4a6daa73ba10e605d761'
@@ -45,41 +40,6 @@ const addressLayer = new MapImageLayer({
   },
   listMode: 'hide'
 });
-
-const symbol = {
-  type: 'simple-marker', // autocasts as new SimpleMarkerSymbol()
-  style: 'circle',
-  color: 'black',
-  size: '6px' // pixels
-};
-
-const symbol1 = {
-  type: 'simple-marker', // autocasts as new SimpleMarkerSymbol()
-  style: 'circle',
-  color: 'red',
-  size: '6px' // pixels
-};
-
-const symbol2 = {
-  type: 'simple-marker', // autocasts as new SimpleMarkerSymbol()
-  style: 'circle',
-  color: 'green',
-  size: '6px' // pixels
-};
-
-const symbol3 = {
-  type: 'simple-marker', // autocasts as new SimpleMarkerSymbol()
-  style: 'circle',
-  color: 'yellow',
-  size: '6px' // pixels
-};
-
-const symbol4 = {
-  type: 'simple-marker', // autocasts as new SimpleMarkerSymbol()
-  style: 'circle',
-  color: 'blue',
-  size: '6px' // pixels
-};
 
 const addressGroupLayer = new GroupLayer({
   layers: [addressLayer, recentRecentAddressLayer],
