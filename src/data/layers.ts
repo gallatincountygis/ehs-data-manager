@@ -42,6 +42,26 @@ export const LEDLayer = new FeatureLayer({
 LEDLayer.when(() => {
   const ledFieldConfig = LEDLayer.fields
     .filter((f: esri.Field) => {
+      return f.name !== 'FID';
+    })
+    .map((f: esri.Field) => {
+      const fc = {
+        description: f.description,
+        domain: f.domain,
+        editable: f.editable,
+        name: f.name,
+        maxLength: f.length,
+        label: f.alias
+      } as esri.FieldConfig;
+      return fc;
+    }) as esri.FieldConfig[];
+  addLayerInfos(LEDLayer, ledFieldConfig);
+});
+
+/*
+LEDLayer.when(() => {
+  const ledFieldConfig = LEDLayer.fields
+    .filter((f: esri.Field) => {
       return f.name != 'OBJECTID' && f.name != 'Shape__Area' && f.name != 'Shape__Length';
     })
     .map((f: esri.Field) => {
@@ -62,6 +82,7 @@ LEDLayer.when(() => {
   addLayerInfos(LEDLayer, ledFieldConfig);
 });
 
+*/
 export const cosaLayer = new FeatureLayer({
   portalItem: {
     id: '5420c4a003e44fb28b1428b8581e3df9'
