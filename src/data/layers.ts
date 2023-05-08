@@ -26,11 +26,7 @@ export const LEDLayer = new FeatureLayer({
     content: [
       {
         type: 'fields',
-        fieldInfos: [
-          {
-            fieldName: ''
-          }
-        ]
+        fieldInfos: []
       },
       new AttachmentsContent({
         displayType: 'list'
