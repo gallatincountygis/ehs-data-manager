@@ -12,77 +12,9 @@ export const LEDLayer = new FeatureLayer({
   title: 'Licensed Establishment Districts',
   id: 'led',
   displayField: 'LED_Name',
-  visible: false,
-  editingEnabled: true,
-  popupTemplate: {
-    title: 'Licensed Establishment District: {LED_Name}',
-    actions: [
-      {
-        title: 'Edit feature',
-        id: 'edit-this',
-        className: 'esri-icon-edit'
-      }
-    ] as esri.ActionButton[],
-    content: [
-      {
-        type: 'fields',
-        fieldInfos: []
-      },
-      new AttachmentsContent({
-        displayType: 'list'
-      })
-    ]
-  }
+  visible: false
 });
 
-LEDLayer.when(() => {
-  const ledFieldConfig = LEDLayer.fields
-    .filter((f: esri.Field) => {
-      return f.name !== 'FID';
-    })
-    .map((f: esri.Field) => {
-      LEDLayer.popupTemplate.content[0].fieldInfos.push({
-        fieldName: f.name,
-        label: f.alias
-      });
-      const fc = {
-        description: f.description,
-        domain: f.domain,
-        editable: f.editable,
-        name: f.name,
-        maxLength: f.length,
-        label: f.alias
-      } as esri.FieldConfig;
-      return fc;
-    }) as esri.FieldConfig[];
-  addLayerInfos(LEDLayer, ledFieldConfig);
-});
-
-/*
-LEDLayer.when(() => {
-  const ledFieldConfig = LEDLayer.fields
-    .filter((f: esri.Field) => {
-      return f.name != 'OBJECTID' && f.name != 'Shape__Area' && f.name != 'Shape__Length';
-    })
-    .map((f: esri.Field) => {
-      LEDLayer.popupTemplate.content[0].fieldInfos.push({
-        fieldName: f.name,
-        label: f.alias
-      });
-      const fc = {
-        description: f.description,
-        domain: f.domain as esri.CodedValueDomain | esri.RangeDomain,
-        editable: f.editable,
-        name: f.name,
-        maxLength: f.length,
-        label: f.alias
-      } as esri.FieldConfig;
-      return fc;
-    }) as esri.FieldConfig[];
-  addLayerInfos(LEDLayer, ledFieldConfig);
-});
-
-*/
 export const cosaLayer = new FeatureLayer({
   portalItem: {
     id: '5420c4a003e44fb28b1428b8581e3df9'
@@ -296,6 +228,7 @@ waterSupplySystemLayer.when(() => {
     }) as esri.FieldConfig[];
   addLayerInfos(waterSupplySystemLayer, wSSFieldConfig);
 });
+
 export const notesLayer = new FeatureLayer({
   portalItem: {
     id: '9d8ecc343fad4ffdb5c094647f78690e'
