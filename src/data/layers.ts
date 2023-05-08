@@ -12,6 +12,7 @@ export const LEDLayer = new FeatureLayer({
   title: 'Licensed Establishment Districts',
   id: 'led',
   displayField: 'LED_Name',
+  visible: false,
   editingEnabled: true,
   popupTemplate: {
     title: 'Licensed Establishment District: {LED_Name}',
@@ -25,13 +26,40 @@ export const LEDLayer = new FeatureLayer({
     content: [
       {
         type: 'fields',
-        fieldInfos: []
+        fieldInfos: [
+          {
+            fieldName: ''
+          }
+        ]
       },
       new AttachmentsContent({
         displayType: 'list'
       })
     ]
   }
+});
+
+LEDLayer.when(() => {
+  const ledFieldConfig = LEDLayer.fields
+    .filter((f: esri.Field) => {
+      return f.name != 'OBJECTID' && f.name != 'Shape__Area' && f.name != 'Shape__Length';
+    })
+    .map((f: esri.Field) => {
+      LEDLayer.popupTemplate.content[0].fieldInfos.push({
+        fieldName: f.name,
+        label: f.alias
+      });
+      const fc = {
+        description: f.description,
+        domain: f.domain as esri.CodedValueDomain | esri.RangeDomain,
+        editable: f.editable,
+        name: f.name,
+        maxLength: f.length,
+        label: f.alias
+      } as esri.FieldConfig;
+      return fc;
+    }) as esri.FieldConfig[];
+  addLayerInfos(LEDLayer, ledFieldConfig);
 });
 
 export const cosaLayer = new FeatureLayer({
