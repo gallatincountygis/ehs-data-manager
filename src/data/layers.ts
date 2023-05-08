@@ -41,6 +41,10 @@ LEDLayer.when(() => {
       return f.name !== 'FID';
     })
     .map((f: esri.Field) => {
+      LEDLayer.popupTemplate.content[0].fieldInfos.push({
+        fieldName: f.name,
+        label: f.alias
+      });
       const fc = {
         description: f.description,
         domain: f.domain,
