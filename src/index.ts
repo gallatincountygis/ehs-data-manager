@@ -36,7 +36,7 @@ IdentityManager.registerOAuthInfos([info]);
 //IdentityManager.checkSignInStatus(info.portalUrl + '/sharing');
 
 const viewpoint = new Viewpoint({
-  scale: 288895,
+  scale: 50000,
   targetGeometry: new Point({
     spatialReference: {
       wkid: 102100
